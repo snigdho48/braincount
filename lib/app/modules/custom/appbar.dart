@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 PreferredSize appBarWidget(BuildContext context) {
   var isSubroute = Get.currentRoute.split('/').length > 2;
@@ -46,7 +48,7 @@ PreferredSize appBarWidget(BuildContext context) {
           // Notifications IconButton
           Builder(builder: (context) {
             return IconButton(
-            icon: Icon(Icons.notifications),
+            icon: FaIcon(FontAwesomeIcons.ellipsisVertical),
             onPressed: () {
               // Open end drawer for notifications
             

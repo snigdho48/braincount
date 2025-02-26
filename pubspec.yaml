@@ -39,6 +39,7 @@ dependencies:
   one_request: ^1.0.3
   flutter_launcher_icons: ^0.14.3
   animated_bottom_navigation_bar: ^1.4.0
+  font_awesome_flutter: ^10.8.0
 
 
 dev_dependencies:
