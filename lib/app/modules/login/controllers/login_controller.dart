@@ -1,7 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
+  final GlobalKey formKey = GlobalKey();
+  final visible = false.obs;
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final emailFocus = FocusNode().obs;
+  final passwordFocus = FocusNode().obs;
 
   final count = 0.obs;
   @override

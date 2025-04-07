@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
-PreferredSize appBarWidget(BuildContext context) {
+PreferredSize appBarWidget(BuildContext context, {bool threedot = true}) {
   var isSubroute = Get.currentRoute.split('/').length > 2;
 
   return PreferredSize(
@@ -46,7 +46,8 @@ PreferredSize appBarWidget(BuildContext context) {
             style: TextStyle(fontSize: 20),
           ),
           // Notifications IconButton
-          Builder(builder: (context) {
+         threedot? Builder(builder: (context) {
+            if (Get.currentRoute == '/login' || Get.currentRoute=='/signup') return SizedBox(width: Get.width*.1,);
             return IconButton(
             icon: FaIcon(FontAwesomeIcons.ellipsisVertical),
             onPressed: () {
@@ -54,7 +55,7 @@ PreferredSize appBarWidget(BuildContext context) {
             
             },
           );
-          }),
+          }):SizedBox.shrink(),
         ],
       ),
     ),

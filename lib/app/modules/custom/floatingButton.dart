@@ -44,8 +44,6 @@ class _FloatingButtonState extends State<FloatingButton> {
             // Navigate to the home route when pressed
             _onTapDown();
             Get.toNamed(Routes.HOME);
-
-         
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(50),

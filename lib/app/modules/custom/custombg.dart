@@ -13,8 +13,6 @@ Widget backgroundColorLinear({required Widget child}) {
         fit: BoxFit.cover,
       ),
     ),
-    child: SingleChildScrollView(
-      child: child,
-    ),
+    child: child,
   );
 }
