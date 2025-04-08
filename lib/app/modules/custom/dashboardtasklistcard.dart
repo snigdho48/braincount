@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +17,8 @@ Widget tasklistCardDashboard({
           side: BorderSide.none,
         ),
         elevation: 3,
-        padding: EdgeInsets.symmetric(horizontal: Get.width * .05,vertical: Get.width * .03),
+        padding: EdgeInsets.symmetric(
+            horizontal: Get.width * .05, vertical: Get.width * .03),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -27,16 +27,15 @@ Widget tasklistCardDashboard({
           Container(
             width: Get.width * .05,
             height: Get.width * .05,
-            
             decoration: BoxDecoration(
               color: Colors.white,
-              
               borderRadius: BorderRadius.circular(50),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color.fromARGB(255, 218, 217, 225), // top light greyish purple
+                  Color.fromARGB(
+                      255, 218, 217, 225), // top light greyish purple
                   Color.fromARGB(255, 250, 251, 255), // bottom light grey/white
                 ],
               ),
@@ -48,13 +47,11 @@ Widget tasklistCardDashboard({
                 ),
               ],
             ),
-       
           ),
-         Expanded(
-      
-           child: Padding(
-             padding: EdgeInsets.only(left: Get.width * .07),
-             child: Row(
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: Get.width * .07),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -87,12 +84,15 @@ Widget tasklistCardDashboard({
                           ),
                         )
                       : SizedBox.shrink(),
-                  Icon(Icons.arrow_forward_ios, color: Colors.black54,
-                      size: Get.width * .05,),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.black54,
+                    size: Get.width * .05,
+                  ),
                 ],
-             ),
-           ),
-         )
+              ),
+            ),
+          )
         ],
       ),
     ),

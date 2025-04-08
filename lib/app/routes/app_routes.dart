@@ -9,6 +9,9 @@ abstract class Routes {
   static const TASKLIST = _Paths.TASKLIST;
   static const NOTIFICATIONS = _Paths.NOTIFICATIONS;
   static const PROFILE = _Paths.PROFILE;
+  static const PENDINGLIST = _Paths.PENDINGLIST;
+  static const PREVIOUSLIST = _Paths.PREVIOUSLIST;
+  static const DATACOLLECT = _Paths.DATACOLLECT;
 }
 
 abstract class _Paths {
@@ -16,7 +19,10 @@ abstract class _Paths {
   static const HOME = '/dashboard';
   static const LOGIN = '/login';
   static const SIGNUP = '/signup';
-  static const TASKLIST = '/tasklist';
+  static const TASKLIST = '/taskList';
   static const NOTIFICATIONS = '/notifications';
   static const PROFILE = '/profile';
+  static const PENDINGLIST = '/pendingList';
+  static const PREVIOUSLIST = '/previousList';
+  static const DATACOLLECT = '/dataCollect';
 }

@@ -1,61 +1,67 @@
-import 'package:braincount/app/routes/app_pages.dart';
+import 'package:braincount/app/modules/custom/navcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class FloatingButton extends StatefulWidget {
-  @override
-  _FloatingButtonState createState() => _FloatingButtonState();
-}
+class FloatingButton extends StatelessWidget {
+  
 
-class _FloatingButtonState extends State<FloatingButton> {
-  double _scale = 1.0; // Initial scale factor
 
-  void _onTapDown() {
-    setState(() {
-      _scale = 0.9; 
-    });
-  }
+     final navController = Get.put(NavController());
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedScale(
-      scale: _scale, // Apply scale
-      duration: Duration(milliseconds: 200), // Animation duration
-      onEnd: () => setState(() {
-        _scale = 1.0; // Return to the initial scale
-      }),
-      curve: Curves.easeInOut, // Smooth transition
-      child: SizedBox(
-        height: Get.width * 0.15, // Increased size
-        width: Get.width * 0.15, // Increased size
-        child: FloatingActionButton(
-          
-          focusColor: Colors.transparent,
-          hoverColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          highlightElevation: 0,
-          isExtended: true,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          onPressed: () {
-            // Navigate to the home route when pressed
-            _onTapDown();
-            Get.toNamed(Routes.HOME);
-          },
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: Container(
-              color: Colors.black,
+    navController.startScaling();
+
+    return Obx(()=>
+       AnimatedScale(
+        scale: navController.scale.value, // Apply scale
+        duration: Duration(milliseconds: 200), // Animation duration
+        onEnd: () => navController.scale.value = 1.0, // Reset scale after animation
+        
+        curve: Curves.easeInOut, // Smooth transition
+        child: SizedBox(
+          height: Get.width * 0.15, // Increased size
+          width: Get.width * 0.15, // Increased size
+          child: FloatingActionButton(
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            highlightElevation: 0,
+            isExtended: true,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            onPressed: navController.opencamera,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
               child: Container(
-                margin: EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
+                 width: 65, // Set width
+                height: 65,
+                color: Colors.black,
+                child: Container(
+                  margin: EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Get.currentRoute == "/dataCollect"
+                      ? Obx(()=>
+                         AnimatedScale(
+                          scale: navController.btnScale.value, // Apply scale
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          
+                          child: Icon(
+                              Icons.camera_alt,
+                              size: 32,
+                              color: Colors.black,
+                            ),
+                        ),
+                      )
+                      : SizedBox.shrink()
                 ),
-                
               ),
             ),
           ),
