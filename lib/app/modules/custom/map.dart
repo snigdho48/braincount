@@ -36,7 +36,9 @@ Widget openStreetMap({required List<Map<String, double>> coordinates}) {
               point: position,
               child: Icon(
                 Icons.location_on,
-                color: Colors.red,
+                color: markerPosition.indexOf(position) == 0
+                    ? Colors.blue
+                    : Colors.green, // Change color based on index
                 size: 40,
               ),
             );

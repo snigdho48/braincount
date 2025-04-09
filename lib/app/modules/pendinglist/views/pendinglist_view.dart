@@ -2,7 +2,6 @@ import 'package:braincount/app/modules/custom/appbar.dart';
 import 'package:braincount/app/modules/custom/bottomnav.dart';
 import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:braincount/app/modules/custom/dashboardtasklistcard.dart';
-import 'package:braincount/app/modules/custom/floatingButton.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -15,9 +14,7 @@ class PendinglistView extends GetView<PendinglistController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(context, back: true),
-      floatingActionButton: FloatingButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+
       bottomNavigationBar: CustomBottomNavigationBar(),
       body: backgroundColorLinear(
           child: SizedBox(

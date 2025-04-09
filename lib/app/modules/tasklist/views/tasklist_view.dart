@@ -4,7 +4,6 @@ import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:braincount/app/modules/custom/dashboardtasklistCard.dart';
 import 'package:braincount/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
-import 'package:braincount/app/modules/custom/floatingButton.dart';
 import 'package:get/get.dart';
 
 import '../controllers/tasklist_controller.dart';
@@ -15,9 +14,7 @@ class TasklistView extends GetView<TasklistController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(context),
-      floatingActionButton: FloatingButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+
       bottomNavigationBar: CustomBottomNavigationBar(),
       body: backgroundColorLinear(
         child: SizedBox(

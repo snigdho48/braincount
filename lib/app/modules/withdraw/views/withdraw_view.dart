@@ -5,15 +5,14 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/notifications_controller.dart';
+import '../controllers/withdraw_controller.dart';
 
-class NotificationsView extends GetView<NotificationsController> {
-  const NotificationsView({super.key});
+class WithdrawView extends GetView<WithdrawController> {
+  const WithdrawView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(context),
-
       bottomNavigationBar: CustomBottomNavigationBar(),
       body: backgroundColorLinear(
         child: SizedBox(

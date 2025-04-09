@@ -4,9 +4,9 @@ import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:braincount/app/modules/custom/dashboardcard.dart';
 import 'package:braincount/app/modules/custom/dashboardtasklistCard.dart';
 import 'package:braincount/app/modules/custom/dashoardbtn.dart';
+import 'package:braincount/app/modules/custom/navcontroller.dart';
 import 'package:braincount/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
-import 'package:braincount/app/modules/custom/floatingButton.dart';
 import 'package:get/get.dart';
 
 import '../controllers/home_controller.dart';
@@ -15,11 +15,10 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
+    final navcontroller = Get.put(NavController());
     return Scaffold(
         appBar: appBarWidget(context),
-        floatingActionButton: FloatingButton(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+
         bottomNavigationBar: CustomBottomNavigationBar(),
         body: backgroundColorLinear(
           child: SizedBox(
@@ -94,11 +93,15 @@ class HomeView extends GetView<HomeController> {
                           children: [
                             dashboardbtn(
                               text: 'Widthdraw',
-                              onPressed: () {},
+                              onPressed: () {
+                                navcontroller.changeIndex(3);
+                              },
                             ),
                             dashboardbtn(
                               text: 'Profile',
-                              onPressed: () {},
+                              onPressed: () {
+                                navcontroller.changeIndex(4);
+                              },
                             ),
                           ],
                         ),
@@ -115,7 +118,7 @@ class HomeView extends GetView<HomeController> {
                         text: 'Task List',
                         image: 'assets/icon/list.png',
                         onPressed: () {
-                          controller.navcontroller.selectedIndex(3);
+                          navcontroller.changeIndex(1);
                         },
                       ),
                       dashboardCard(
@@ -157,36 +160,38 @@ class HomeView extends GetView<HomeController> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     spacing: Get.height * .015,
                     children: [
+                     tasklistCardDashboard(
+                          text: 'Billboard1 at Gulshan',
+                          onPressed: controller.opendialog,
+                          status: 'Pending'),
                       tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
+                          text: 'Billboard1 at Gulshan',
+                          onPressed: controller.opendialog,
+                          status: 'Pending'),
                       tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
+                          text: 'Billboard1 at Gulshan',
+                          onPressed: controller.opendialog,
+                          status: 'Pending'),
                       tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
+                          text: 'Billboard1 at Gulshan',
+                          onPressed: controller.opendialog,
+                          status: 'Pending'),
                       tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
+                          text: 'Billboard1 at Gulshan',
+                          onPressed: controller.opendialog,
+                          status: 'Pending'),
                       tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
+                          text: 'Billboard1 at Gulshan',
+                          onPressed: controller.opendialog,
+                          status: 'Pending'),
                       tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
+                          text: 'Billboard1 at Gulshan',
+                          onPressed: controller.opendialog,
+                          status: 'Pending'),
                       tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan', onPressed: () {}),
+                          text: 'Billboard1 at Gulshan',
+                          onPressed: controller.opendialog,
+                          status: 'Pending'),
                       SizedBox(
                         height: Get.height * .03,
                       ),

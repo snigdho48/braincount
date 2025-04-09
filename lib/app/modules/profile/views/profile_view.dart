@@ -1,3 +1,6 @@
+import 'package:braincount/app/modules/custom/appbar.dart';
+import 'package:braincount/app/modules/custom/bottomnav.dart';
+import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -9,15 +12,84 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ProfileView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'ProfileView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      appBar: appBarWidget(context),
+
+      bottomNavigationBar: CustomBottomNavigationBar(),
+      body: backgroundColorLinear(
+        child: SizedBox(
+            height: Get.height,
+            width: Get.width,
+            child: SingleChildScrollView(
+              padding: EdgeInsets.only(
+                  top: Get.height * .02,
+                  left: context.width * .05,
+                  right: context.width * .05),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                spacing: Get.height * .04,
+                children: [
+                  Container(
+                    width: Get.width * 0.4,
+                    height: Get.width * 0.4,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.blue,
+                        width: 4,
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage('https://i.pravatar.cc/300'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+
+                  // Name
+                  Text(
+                    'John Doe',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+
+                  // Bio/Description
+                  Text(
+                    'This is a short description about the user. Feel free to customize it.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16),
+                  ),
+
+                  // Contact Info Section (email, phone)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.email, color: Colors.blue),
+                      SizedBox(width: 10),
+                      Text('john.doe@example.com',
+                          style: TextStyle(fontSize: 16)),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.phone, color: Colors.blue),
+                      SizedBox(width: 10),
+                      Text('+1 234 567 890', style: TextStyle(fontSize: 16)),
+                    ],
+                  ),
+
+                  // Edit Profile Button
+                  ElevatedButton(
+                    onPressed: () {
+                      // Navigate to the edit profile screen
+                    },
+                    child: Text('Edit Profile'),
+                  ),
+                  SizedBox(
+                    height: Get.height * .03,
+                  ),
+                ],
+              ),
+            )),
       ),
     );
   }

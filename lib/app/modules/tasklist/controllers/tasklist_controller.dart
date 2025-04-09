@@ -10,10 +10,15 @@ class TasklistController extends GetxController {
   void opendialog() {
     Get.defaultDialog(
       title: 'Task Acceptance',
+      titlePadding: EdgeInsets.only(top: Get.height * .02),
       content: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: Get.width * .05),
+            padding: EdgeInsets.only(
+              left: Get.width * .05,
+              right: Get.width * .05,
+              top: Get.height * .01,
+            ),
             child: const Text(
               'Are you sure you want to accept this task?',
               style: TextStyle(fontSize: 16),

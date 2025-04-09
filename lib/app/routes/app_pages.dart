@@ -18,6 +18,8 @@ import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/tasklist/bindings/tasklist_binding.dart';
 import '../modules/tasklist/views/tasklist_view.dart';
+import '../modules/withdraw/bindings/withdraw_binding.dart';
+import '../modules/withdraw/views/withdraw_view.dart';
 
 part 'app_routes.dart';
 
@@ -71,6 +73,11 @@ class AppPages {
       name: _Paths.DATACOLLECT,
       page: () => const DatacollectView(),
       binding: DatacollectBinding(),
+    ),
+    GetPage(
+      name: _Paths.WITHDRAW,
+      page: () => const WithdrawView(),
+      binding: WithdrawBinding(),
     ),
   ];
 }

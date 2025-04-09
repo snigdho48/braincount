@@ -12,6 +12,7 @@ abstract class Routes {
   static const PENDINGLIST = _Paths.PENDINGLIST;
   static const PREVIOUSLIST = _Paths.PREVIOUSLIST;
   static const DATACOLLECT = _Paths.DATACOLLECT;
+  static const WITHDRAW = _Paths.WITHDRAW;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const PENDINGLIST = '/pendingList';
   static const PREVIOUSLIST = '/previousList';
   static const DATACOLLECT = '/dataCollect';
+  static const WITHDRAW = '/withdraw';
 }

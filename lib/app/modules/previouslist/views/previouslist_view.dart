@@ -2,7 +2,6 @@ import 'package:braincount/app/modules/custom/appbar.dart';
 import 'package:braincount/app/modules/custom/bottomnav.dart';
 import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:braincount/app/modules/custom/dashboardtasklistcard.dart';
-import 'package:braincount/app/modules/custom/floatingButton.dart';
 import 'package:braincount/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,6 @@ class PreviouslistView extends GetView<PreviouslistController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: appBarWidget(context, back: true),
-        floatingActionButton: FloatingButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         bottomNavigationBar: CustomBottomNavigationBar(),
