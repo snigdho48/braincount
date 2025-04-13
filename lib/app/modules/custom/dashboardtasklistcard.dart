@@ -80,23 +80,26 @@ Widget tasklistCardDashboard({
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          text,
-                          textAlign: TextAlign.center,
-                          softWrap: true,
-                          overflow: TextOverflow.visible,
-                          textWidthBasis: TextWidthBasis.parent,
-                          style: TextStyle(
-                            fontSize: Get.width * .04,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black87,
+                        SizedBox(
+                          width: Get.width * .3,
+                          child: Text(
+                            text,
+                            textAlign: TextAlign.start,
+                            softWrap: true,
+                            overflow: TextOverflow.visible,
+                            textWidthBasis: TextWidthBasis.parent,
+                            style: TextStyle(
+                              fontSize: Get.width * .04,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.black87,
+                            ),
                           ),
                         ),
                         status != null
                             ? Badge(
-                                backgroundColor: status == 'Pending'
+                                backgroundColor: status.toLowerCase() == 'pending'
                                     ? Colors.orange
-                                    : status == 'Accepted'
+                                    : status.toLowerCase() == 'accepted'
                                         ? Colors.green
                                         : Colors.red,
                                 label: Text(

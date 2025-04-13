@@ -14,7 +14,6 @@ class TasklistView extends GetView<TasklistController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(context),
-
       bottomNavigationBar: CustomBottomNavigationBar(),
       body: backgroundColorLinear(
         child: SizedBox(

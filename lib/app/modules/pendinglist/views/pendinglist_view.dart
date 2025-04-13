@@ -14,7 +14,6 @@ class PendinglistView extends GetView<PendinglistController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(context, back: true),
-
       bottomNavigationBar: CustomBottomNavigationBar(),
       body: backgroundColorLinear(
           child: SizedBox(

@@ -30,11 +30,10 @@ class NavController extends GetxController {
     cameraclick.value = !cameraclick.value;
   }
 
-void removeImage(String type) {
-  print(type);
+  void removeImage(String type) {
+    print(type);
     imageList.removeWhere((element) => element['type'] == type);
   }
-
 
   void startScaling() {
     Future.doWhile(() async {
@@ -213,15 +212,15 @@ void removeImage(String type) {
   void changeIndex(int index) {
     selectedIndex.value = index;
     if (index == 0) {
-      Get.offAndToNamed(Routes.HOME);
+      Get.offAllNamed(Routes.HOME);
     } else if (index == 1) {
-      Get.offAndToNamed(Routes.TASKLIST);
+      Get.offAllNamed(Routes.TASKLIST);
     } else if (index == 2) {
-      Get.offAndToNamed(Routes.WITHDRAW);
+      Get.offAllNamed(Routes.WITHDRAW);
     } else if (index == 3) {
-      Get.offAndToNamed(Routes.NOTIFICATIONS);
-    }else if (index == 4) {
-      Get.offAndToNamed(Routes.PROFILE);
+      Get.offAllNamed(Routes.NOTIFICATIONS);
+    } else if (index == 4) {
+      Get.offAllNamed(Routes.PROFILE);
     }
   }
 }

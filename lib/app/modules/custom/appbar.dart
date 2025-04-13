@@ -11,21 +11,21 @@ PreferredSize appBarWidget(BuildContext context,
     preferredSize:
         Size(Get.width, kToolbarHeight + MediaQuery.of(context).padding.top),
     child: Container(
-      padding:Get.currentRoute == '/login' ||
-                      Get.currentRoute == '/signup'?EdgeInsets.zero: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 5),
+      padding: Get.currentRoute == '/login' || Get.currentRoute == '/signup'
+          ? EdgeInsets.zero
+          : EdgeInsets.only(top: MediaQuery.of(context).padding.top + 5),
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/image/bgtop.png'),
-          fit: BoxFit.cover,
-        ),
-        boxShadow: [
-          BoxShadow(
+          image: DecorationImage(
+            image: AssetImage('assets/image/bgtop.png'),
+            fit: BoxFit.cover,
+          ),
+          boxShadow: [
+            BoxShadow(
               color: Colors.black.withOpacity(0.1), // Shadow color
               blurRadius: 1, // How blurry the shadow is
               offset: Offset(0, 2), // Horizontal and vertical displacement
             )
-        ]
-      ),
+          ]),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -52,23 +52,24 @@ PreferredSize appBarWidget(BuildContext context,
             );
           }),
           // Displaying the current route with first letter capitalized for each word
-       
-            Get.currentRoute == '/login' || Get.currentRoute == '/signup' ? SizedBox.shrink()
-                :  Text(
-              Get.currentRoute
-                  .substring(1)
-                  .split('/')
-                  .map((word) => word.isNotEmpty
-                      ? (word[0].toUpperCase() +
-                          word.substring(1).replaceAllMapped(
-                                RegExp(r'([A-Z])'),
-                                (match) => ' ${match.group(0)}',
-                              ))
-                      : '')
-                  .join(' - '),
-              style: TextStyle(fontSize: 20),
-            ),
-          
+
+          Get.currentRoute == '/login' || Get.currentRoute == '/signup'
+              ? SizedBox.shrink()
+              : Text(
+                  Get.currentRoute
+                      .substring(1)
+                      .split('/')
+                      .map((word) => word.isNotEmpty
+                          ? (word[0].toUpperCase() +
+                              word.substring(1).replaceAllMapped(
+                                    RegExp(r'([A-Z])'),
+                                    (match) => ' ${match.group(0)}',
+                                  ))
+                          : '')
+                      .join(' - '),
+                  style: TextStyle(fontSize: 20),
+                ),
+
           // Notifications IconButton
           threedot
               ? Builder(builder: (context) {

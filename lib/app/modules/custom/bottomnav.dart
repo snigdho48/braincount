@@ -33,7 +33,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         ),
       ),
       child: AnimatedBottomNavigationBar(
-      gapWidth: 0,
+        gapWidth: 0,
         icons: iconList,
         activeIndex: navController.selectedIndex.value, // The active index
         shadow: BoxShadow(
@@ -50,7 +50,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
 
         inactiveColor: Colors.grey.shade400,
         activeColor: Color.fromARGB(255, 9, 165, 128),
-
       ),
     );
   }

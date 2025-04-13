@@ -22,7 +22,6 @@ class LoginView extends GetView<LoginController> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 spacing: Get.height * .1,
                 children: <Widget>[
-                 
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: Get.width * .1, vertical: 8.0),
@@ -30,31 +29,31 @@ class LoginView extends GetView<LoginController> {
                       key: controller.formKey,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       child: Obx(
-                        ()=> Column(
+                        () => Column(
                           children: [
-                           SizedBox(
-                            height: Get.height * .4,
-                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              spacing: Get.height * .02,
-                              children: [
+                            SizedBox(
+                              height: Get.height * .4,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                spacing: Get.height * .02,
+                                children: [
                                   Text('Login',
-                                  style: TextStyle(
-                                      fontSize: Get.width * .1,
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.black87)),
-                              Text('Welcome! Please login to your account.',
-                                  style: TextStyle(
-                                      fontSize: Get.width * .04,
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.black87)),
-                              SizedBox(
-                                height: Get.height * .02,
+                                      style: TextStyle(
+                                          fontSize: Get.width * .1,
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.black87)),
+                                  Text('Welcome! Please login to your account.',
+                                      style: TextStyle(
+                                          fontSize: Get.width * .04,
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.black87)),
+                                  SizedBox(
+                                    height: Get.height * .02,
+                                  ),
+                                ],
                               ),
-                              ],
-                             ),
-                           ),
+                            ),
                             Container(
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -64,19 +63,20 @@ class LoginView extends GetView<LoginController> {
                                 focusNode: controller.emailFocus.value,
                                 onFieldSubmitted: (value) {
                                   controller.emailFocus.value.unfocus();
-                                  FocusScope.of(context)
-                                      .requestFocus(controller.passwordFocus.value);
+                                  FocusScope.of(context).requestFocus(
+                                      controller.passwordFocus.value);
                                 },
                                 controller: controller.email,
                                 decoration: InputDecoration(
-                                    labelText: 'Email',
+                                    labelText: 'Username',
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
-                                      borderSide: controller
-                                              .emailFocus.value.hasFocus
-                                          ? BorderSide.none
-                                          : BorderSide(
-                                              color: Color.fromARGB(255, 0, 138, 97)),
+                                      borderSide:
+                                          controller.emailFocus.value.hasFocus
+                                              ? BorderSide.none
+                                              : BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255, 0, 138, 97)),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -85,8 +85,8 @@ class LoginView extends GetView<LoginController> {
                               ),
                             ),
                             Container(
-                              margin:
-                                  EdgeInsets.symmetric(vertical: Get.height * .02),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: Get.height * .02),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
@@ -97,11 +97,12 @@ class LoginView extends GetView<LoginController> {
                                   labelText: 'Password',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide: controller
-                                            .passwordFocus.value.hasFocus
-                                        ? BorderSide.none
-                                        : BorderSide(
-                                            color: Color.fromARGB(255, 0, 138, 97)),
+                                    borderSide:
+                                        controller.passwordFocus.value.hasFocus
+                                            ? BorderSide.none
+                                            : BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 0, 138, 97)),
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -112,13 +113,13 @@ class LoginView extends GetView<LoginController> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top:8.0),
+                              padding: const EdgeInsets.only(top: 8.0),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundBuilder: (context, states, child) => 
+                                  backgroundBuilder: (context, states, child) =>
                                       Container(
-                                        alignment: Alignment.center,
-                                        width: Get.width * .5,
+                                    alignment: Alignment.center,
+                                    width: Get.width * .5,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: Get.width * .05),
                                     decoration: BoxDecoration(
@@ -151,9 +152,7 @@ class LoginView extends GetView<LoginController> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
-                                onPressed: () {
-                                  Get.offAndToNamed(Routes.HOME);
-                                },
+                                onPressed: controller.login,
                                 child: SizedBox.shrink(),
                               ),
                             ),

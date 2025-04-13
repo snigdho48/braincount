@@ -18,7 +18,6 @@ class HomeView extends GetView<HomeController> {
     final navcontroller = Get.put(NavController());
     return Scaffold(
         appBar: appBarWidget(context),
-
         bottomNavigationBar: CustomBottomNavigationBar(),
         body: backgroundColorLinear(
           child: SizedBox(
@@ -114,23 +113,56 @@ class HomeView extends GetView<HomeController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      dashboardCard(
+                       dashboardCard(
                         text: 'Task List',
-                        image: 'assets/icon/list.png',
-                        onPressed: () {
-                          navcontroller.changeIndex(1);
-                        },
-                      ),
-                      dashboardCard(
-                        text: 'Pending List',
                         image: 'assets/icon/list.png',
                         onPressed: () {
                           Get.toNamed(Routes.PENDINGLIST);
                         },
                       ),
+                      Stack(
+                        children: [
+                          dashboardCard(
+                            text: 'Pending List',
+                            image: 'assets/icon/list.png',
+                            onPressed: () {
+                              navcontroller.changeIndex(1);
+                            },
+                          ),
+                          Positioned(
+                            right: 0,
+                            top: 0,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Obx(() {
+                                return Center(
+                                  child: Text(
+                                    controller.pendingtask['pending'] != null && 
+                                            controller.pendingtask['pending'] >0
+                                        ? controller.pendingtask['pending'].toString()
+                                        : '0',
+                                    style: TextStyle(
+                                      fontSize: Get.width * .03,
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                );
+                              }),
+                            ),
+                          )
+                        ],
+                      ),
+                     
                       dashboardCard(
                         text: 'Previous List',
                         image: 'assets/icon/list.png',
+
                         onPressed: () {
                           Get.toNamed(Routes.PREVIOUSLIST);
                         },
@@ -160,38 +192,29 @@ class HomeView extends GetView<HomeController> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     spacing: Get.height * .015,
                     children: [
-                     tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan',
-                          onPressed: controller.opendialog,
-                          status: 'Pending'),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan',
-                          onPressed: controller.opendialog,
-                          status: 'Pending'),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan',
-                          onPressed: controller.opendialog,
-                          status: 'Pending'),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan',
-                          onPressed: controller.opendialog,
-                          status: 'Pending'),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan',
-                          onPressed: controller.opendialog,
-                          status: 'Pending'),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan',
-                          onPressed: controller.opendialog,
-                          status: 'Pending'),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan',
-                          onPressed: controller.opendialog,
-                          status: 'Pending'),
-                      tasklistCardDashboard(
-                          text: 'Billboard1 at Gulshan',
-                          onPressed: controller.opendialog,
-                          status: 'Pending'),
+                      Obx(() {
+                        final data = controller.pendingtask;
+
+                        // Null or structure check
+                        if (data.isEmpty || data['monitoring'] == null) {
+                          return const Center(
+                              child: Text("No monitoring data available."));
+                        }
+
+                        List monitoring = data['monitoring'];
+
+                        return Column(
+                          spacing: 10,
+                          children: monitoring
+                              .map<Widget>((task) => tasklistCardDashboard(
+                                    text: task['billboard_detail']?['title'] ??
+                                        'Untitled',
+                                    status: task['is_accepeted'] ?? 'UNKNOWN',
+                                    onPressed: () => controller.opendialog,
+                                  ))
+                              .toList(),
+                        );
+                      }),
                       SizedBox(
                         height: Get.height * .03,
                       ),

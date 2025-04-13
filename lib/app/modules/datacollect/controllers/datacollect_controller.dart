@@ -53,7 +53,7 @@ class DatacollectController extends NavController {
     super.dispose();
   }
 
-  void preview(XFile xfile ,String type) {
+  void preview(XFile xfile, String type) {
     final initialIndex = navcontroller.imageList.indexOf(xfile);
     final pageController = PageController(initialPage: initialIndex);
 
@@ -116,10 +116,13 @@ class DatacollectController extends NavController {
                     },
                   ),
                 ),
-                  Positioned(
+                Positioned(
                   top: 20,
                   left: 20,
-                  child: Text(type, style: TextStyle(color: Colors.white, fontSize: 20),),
+                  child: Text(
+                    type,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
                 ),
               ],
             ),

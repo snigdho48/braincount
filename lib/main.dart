@@ -17,6 +17,7 @@ void main() async {
       title: "Application",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      builder: oneRequest.initLoading,
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,
       theme: ThemeData(
@@ -38,7 +39,7 @@ void main() async {
           ),
           textTheme: ButtonTextTheme.primary,
         ),
-      textTheme: TextTheme(
+        textTheme: TextTheme(
           // Set all the text styles to black
           displayLarge: TextStyle(color: Colors.black),
           displayMedium: TextStyle(color: Colors.black),
@@ -72,7 +73,6 @@ Future<void> initall() async {
   oneRequest.loadingconfig();
   final navcontroller = Get.put(NavController());
   navcontroller.selectedIndex.value = 0;
-
 
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('google_fonts/OFL.txt');
