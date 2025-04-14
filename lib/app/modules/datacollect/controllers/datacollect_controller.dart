@@ -1,8 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:braincount/app/data/constants.dart';
 import 'package:braincount/app/modules/custom/navcontroller.dart';
+import 'package:braincount/app/modules/datacollect/model/monitoring_model/monitoring_model.dart';
+import 'package:braincount/app/routes/app_pages.dart';
 import 'package:camera/camera.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:one_request/one_request.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
@@ -15,16 +21,14 @@ class DatacollectController extends NavController {
   final selectedStatus = 'Good'.obs;
   final commentController = TextEditingController().obs;
   final navcontroller = Get.put(NavController());
+  final request = oneRequest();
+  final storage = GetStorage();
+  final uuid = ''.obs;
+  final model = Rx<List<MonitoringModel>>([]);
+  final updatedmodel = Rx<MonitoringModel?>(null);
 
   final statusList = [
-    'Good',
-    "Broken",
-    "Not Working",
-    "Not Available",
-    "Not Visible",
-    "Not Clear",
-    "Not Bright",
-    "Not Clean",
+
   ].obs;
 
   @override
@@ -33,6 +37,9 @@ class DatacollectController extends NavController {
     // Initialize the camera controller
     navcontroller.initializeCamera();
     _getLocation();
+    uuid.value = Get.arguments;
+    getStatus();
+    getdata(uuid: uuid.value);
   }
 
   @override
@@ -51,6 +58,149 @@ class DatacollectController extends NavController {
   void dispose() {
     disableCamera();
     super.dispose();
+  }
+
+  void getStatus()async{
+      final result = await request.send(url: '${baseUrl}monitoring/billboard-status/',
+      method: RequestType.GET,
+      header: {
+        'Authorization': 'Bearer ${storage.read('token')}',
+        'Accept': 'application/json',
+      },
+      resultOverlay: false,
+      );
+      result.fold((response) {
+        statusList.clear();
+        print(response);
+        statusList.value = response['status'];
+      }, (error) {
+        Get.snackbar('Error', 'Something went wrong',
+            snackPosition: SnackPosition.TOP,
+            isDismissible: true,
+            icon: const Icon(Icons.error, color: Colors.red),
+            duration: const Duration(seconds: 3));
+      });
+  }
+
+  void postData()async {
+    if (navcontroller.imageList.length < 4) {
+      Get.snackbar('Error', 'Please take all the photo',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.error, color: Colors.red),
+          duration: const Duration(seconds: 3));
+      return;
+    }
+    if (selectedStatus.value == '') {
+      Get.snackbar('Error', 'Please select status',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.error, color: Colors.red),
+          duration: const Duration(seconds: 3));
+      return;
+    }
+   final result = await request.send(
+      url: '${baseUrl}monitoring/',
+      method: RequestType.PATCH,
+      formData: true,
+
+      header: {
+        'Authorization': 'Bearer ${storage.read('token')}',
+      },
+      resultOverlay: false,
+      body: {
+        'uuid': updatedmodel.value?.uuid,
+        'status': selectedStatus.value,
+        'comment': commentController.value.text,
+        'latitude': lat.value,
+        'longitude': lon.value,
+        'left': request.file(
+            file: File(navcontroller.imageList
+                .firstWhere((e) => e['type'] == 'left')['file']
+                .path),
+            filename: 'left.jpg'),
+        'front': request.file(
+            file: File(navcontroller.imageList
+                .firstWhere((e) => e['type'] == 'front')['file']
+                .path),
+            filename: 'front.jpg'),
+        'close': request.file(
+            file: File(navcontroller.imageList
+                .firstWhere((e) => e['type'] == 'close')['file']
+                .path),
+            filename: 'close.jpg'),
+        'right': request.file(
+            file: File(navcontroller.imageList
+                .firstWhere((e) => e['type'] == 'right')['file']
+                .path),
+            filename: 'right.jpg'),
+      },
+    );
+
+    result.fold((response) {
+      Get.snackbar('Success', 'Data submitted successfully',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.check, color: Colors.green),
+          duration: const Duration(seconds: 3));
+          navcontroller.imageList.clear();
+    navcontroller.imageList.refresh();
+    commentController.value.clear();
+    selectedStatus.value = '';
+    model.value = [];
+    updatedmodel.value = null;
+    Get.back();
+    }, (error) {
+      Get.snackbar('Error', 'Something went wrong',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.error, color: Colors.red),
+          duration: const Duration(seconds: 3));
+    });
+    
+    
+
+  }
+
+  void getdata({
+    String? uuid,
+  }) async {
+    final result = await request.send(
+      url: '${baseUrl}monitoring/',
+      method: RequestType.GET,
+      header: {
+        'Authorization': 'Bearer ${storage.read('token')}',
+        'Accept': 'application/json',
+      },
+      resultOverlay: false,
+      queryParameters: {
+        'request_uuid': uuid,
+      },
+    );
+    result.fold((response) {
+      model.value = [];
+      model.value =
+          (response as List).map((e) => MonitoringModel.fromJson(jsonEncode(e))).toList();
+        
+      updatedmodel.value = model.value.firstWhereOrNull((e) => e.left == null && e.right == null && e.status == null && e.comment == null && e.front == null && e.close == null);
+      if (updatedmodel.value == null) {
+        Get.back();
+
+        Get.snackbar('Error', 'No data found',
+            snackPosition: SnackPosition.TOP,
+            isDismissible: true,
+            icon: const Icon(Icons.error, color: Colors.red),
+            duration: const Duration(seconds: 2));
+            return;
+      }
+
+          }, (error) {
+      Get.snackbar('Error', 'Something went wrong',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.error, color: Colors.red),
+          duration: const Duration(seconds: 2));
+    });
   }
 
   void preview(XFile xfile, String type) {
@@ -176,7 +326,7 @@ class DatacollectController extends NavController {
         snackPosition: SnackPosition.TOP,
         isDismissible: true,
         icon: const Icon(Icons.error, color: Colors.red),
-        duration: const Duration(seconds: 5),
+        duration: const Duration(seconds: 3),
         backgroundColor: Colors.black.withOpacity(0.5),
         colorText: Colors.white,
         borderRadius: 10,

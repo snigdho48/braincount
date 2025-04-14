@@ -1,8 +1,5 @@
-import 'dart:io';
-import 'dart:math';
 
 import 'package:braincount/app/modules/custom/appbar.dart';
-import 'package:braincount/app/modules/custom/bottomnav.dart';
 import 'package:braincount/app/modules/custom/camerbtn.dart';
 import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:braincount/app/modules/custom/map.dart';
@@ -20,7 +17,6 @@ class DatacollectView extends GetView<DatacollectController> {
     // controller.navcontroller.imageList.clear();
     return Scaffold(
       appBar: appBarWidget(context, back: true),
-      bottomNavigationBar: CustomBottomNavigationBar(),
       body: backgroundColorLinear(
           child: SizedBox(
         height: Get.height,
@@ -37,14 +33,16 @@ class DatacollectView extends GetView<DatacollectController> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     spacing: Get.height * .015,
                     children: [
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Billboard1 at Gulshan',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                      Obx(
+                        ()=> Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            controller.updatedmodel.value?.billboardDetail?.title ?? '',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),
@@ -53,7 +51,10 @@ class DatacollectView extends GetView<DatacollectController> {
                         child: Obx(() {
                           // Check if coordinates are valid and not zero or missing
                           bool isCoordinatesValid = controller.lat.value != 0 &&
-                              controller.lon.value != 0;
+                              controller.lon.value != 0 && controller.updatedmodel.value?.billboardDetail?.latitude !=0  &&
+                              controller.updatedmodel.value
+                              ?.longitude!=0;
+
 
                           return Stack(
                             children: [
@@ -66,8 +67,9 @@ class DatacollectView extends GetView<DatacollectController> {
                                   },
                                   {
                                     'lat':
-                                        23.8103, // Default coordinates (Dhaka, Bangladesh)
-                                    'lon': 90.4125,
+                                        controller.updatedmodel.value?.billboardDetail?.latitude??0, // Default coordinates (Dhaka, Bangladesh)
+                                    'lon': 
+                                        controller.updatedmodel.value?.billboardDetail?.longitude??0,
                                   }
                                 ]),
                               // Show a loading indicator if coordinates are not valid
@@ -103,25 +105,30 @@ class DatacollectView extends GetView<DatacollectController> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Obx(() {
+                              if (controller.statusList.isEmpty) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
                               return SizedBox(
                                 // Replace Expanded with SizedBox
                                 width: 200, // Set the desired width
-                                child: DropdownButtonFormField<String>(
+                                child: DropdownButtonFormField(
                                   dropdownColor: Colors.white,
                                   value: controller.selectedStatus.value,
                                   items: controller.statusList
-                                      .map((String status) {
-                                    return DropdownMenuItem<String>(
+                                      .map(( status) {
+                                    return DropdownMenuItem(
                                       value: status,
                                       child: Text(status),
                                     );
                                   }).toList(),
-                                  onChanged: (String? newValue) {
+                                  onChanged: ( newValue) {
                                     if (newValue != null &&
                                         controller.statusList
                                             .contains(newValue)) {
                                       controller.selectedStatus.value =
-                                          newValue;
+                                          newValue.toString();
                                     }
                                   },
                                   decoration: InputDecoration(
@@ -314,7 +321,7 @@ class DatacollectView extends GetView<DatacollectController> {
                       SizedBox(
                         width: Get.width * .9,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: controller.postData,
                           child: Text('Submit',
                               style: TextStyle(
                                 fontSize: Get.width * 0.04,

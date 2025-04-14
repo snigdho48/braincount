@@ -38,7 +38,7 @@ class NavController extends GetxController {
   void startScaling() {
     Future.doWhile(() async {
       await Future.delayed(Duration(milliseconds: 300));
-      if (imageList.length == 3) {
+      if (imageList.length == 4) {
         btnScale.value = 1.0;
       } else {
         btnScale.value = (btnScale.value == 1.0) ? 1.2 : 1.0;
@@ -50,14 +50,14 @@ class NavController extends GetxController {
   void opencamera({required String type}) async {
     print(Get.currentRoute);
     if (Get.currentRoute == "/dataCollect") {
-      if (imageList.length == 3) {
+      if (imageList.length == 4) {
         Get.snackbar(
           'Limit Over',
-          'Cannot take more than 3 images',
+          'Cannot take more than 4 images',
           snackPosition: SnackPosition.TOP,
           isDismissible: true,
           icon: const Icon(Icons.error, color: Colors.red),
-          duration: const Duration(seconds: 5),
+          duration: const Duration(seconds: 3),
           backgroundColor: Colors.black.withOpacity(0.5),
           colorText: Colors.white,
           borderRadius: 10,
@@ -165,7 +165,7 @@ class NavController extends GetxController {
         snackPosition: SnackPosition.TOP,
         isDismissible: true,
         icon: const Icon(Icons.error, color: Colors.red),
-        duration: const Duration(seconds: 5),
+        duration: const Duration(seconds: 3),
         backgroundColor: Colors.black.withOpacity(0.5),
         colorText: Colors.white,
         borderRadius: 10,

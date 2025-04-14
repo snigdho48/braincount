@@ -69,6 +69,9 @@ void main() async {
 
 Future<void> initall() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   await GetStorage.init();
   oneRequest.loadingconfig();
   final navcontroller = Get.put(NavController());

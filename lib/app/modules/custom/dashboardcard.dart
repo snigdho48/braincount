@@ -5,7 +5,6 @@ Widget dashboardCard({
   required String text,
   IconData? icon,
   String? image,
-  
   required VoidCallback onPressed,
 }) {
   return ElevatedButton(

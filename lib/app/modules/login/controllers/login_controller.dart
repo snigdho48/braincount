@@ -38,7 +38,7 @@ class LoginController extends GetxController {
           snackPosition: SnackPosition.TOP,
           isDismissible: true,
           icon: const Icon(Icons.error, color: Colors.red),
-          duration: const Duration(seconds: 5));
+          duration: const Duration(seconds: 3));
       return;
     }
     if (password.text.isEmpty) {
@@ -46,7 +46,7 @@ class LoginController extends GetxController {
           snackPosition: SnackPosition.TOP,
           isDismissible: true,
           icon: const Icon(Icons.error, color: Colors.red),
-          duration: const Duration(seconds: 5));
+          duration: const Duration(seconds: 3));
       return;
     }
     if (password.text.length < 6) {
@@ -54,7 +54,7 @@ class LoginController extends GetxController {
           snackPosition: SnackPosition.TOP,
           isDismissible: true,
           icon: const Icon(Icons.error, color: Colors.red),
-          duration: const Duration(seconds: 5));
+          duration: const Duration(seconds: 3));
       return;
     }
     // Perform login action
@@ -75,7 +75,7 @@ class LoginController extends GetxController {
             snackPosition: SnackPosition.TOP,
             isDismissible: true,
             icon: const Icon(Icons.check, color: Colors.green),
-            duration: const Duration(seconds: 5));
+            duration: const Duration(seconds: 3));
         print(res);
         storage.write('token', res['access_token']);
         storage.write('group', res['groups']);
@@ -89,7 +89,7 @@ class LoginController extends GetxController {
             snackPosition: SnackPosition.TOP,
             isDismissible: true,
             icon: const Icon(Icons.error, color: Colors.red),
-            duration: const Duration(seconds: 5));
+            duration: const Duration(seconds: 3));
       },
       // Handle success
     );

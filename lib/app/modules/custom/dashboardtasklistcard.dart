@@ -97,11 +97,12 @@ Widget tasklistCardDashboard({
                         ),
                         status != null
                             ? Badge(
-                                backgroundColor: status.toLowerCase() == 'pending'
-                                    ? Colors.orange
-                                    : status.toLowerCase() == 'accepted'
-                                        ? Colors.green
-                                        : Colors.red,
+                                backgroundColor:
+                                    status.toLowerCase() == 'pending'
+                                        ? Colors.orange
+                                        : status.toLowerCase() == 'accepted'
+                                            ? Colors.green
+                                            : Colors.red,
                                 label: Text(
                                   status,
                                   style: TextStyle(

@@ -29,86 +29,33 @@ class PendinglistView extends GetView<PendinglistController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   spacing: Get.height * .015,
                   children: [
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
-                    tasklistCardDashboard(
-                        text: 'Billboard1 at Gulshan',
-                        onPressed: controller.opendialog,
-                        status: 'Pending'),
+                    Obx(() {
+                      final data = controller.pendingtask;
+
+                      // Null or structure check
+                      if (data.isEmpty || data['monitoring'] == null) {
+                        return const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [Text("No monitoring data available.")]);
+                      }
+
+                      List monitoring = data['monitoring'];
+
+                      return Column(
+                        spacing: 10,
+                        children: monitoring
+                            .map<Widget>((task) => tasklistCardDashboard(
+                                  text: task['billboard_detail']?['title'] ??
+                                      'Untitled',
+                                  status: task['is_accepeted'] ?? 'UNKNOWN',
+                                  onPressed: () =>
+                                      controller.opendialog(uuid: task['uuid']),
+                                ))
+                            .toList(),
+                      );
+                    }),
                     SizedBox(
                       height: Get.height * .03,
                     ),

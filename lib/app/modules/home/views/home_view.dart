@@ -113,11 +113,11 @@ class HomeView extends GetView<HomeController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                       dashboardCard(
+                      dashboardCard(
                         text: 'Task List',
                         image: 'assets/icon/list.png',
                         onPressed: () {
-                          Get.toNamed(Routes.PENDINGLIST);
+                          navcontroller.changeIndex(1);
                         },
                       ),
                       Stack(
@@ -126,7 +126,7 @@ class HomeView extends GetView<HomeController> {
                             text: 'Pending List',
                             image: 'assets/icon/list.png',
                             onPressed: () {
-                              navcontroller.changeIndex(1);
+                              Get.toNamed(Routes.PENDINGLIST);
                             },
                           ),
                           Positioned(
@@ -142,9 +142,11 @@ class HomeView extends GetView<HomeController> {
                               child: Obx(() {
                                 return Center(
                                   child: Text(
-                                    controller.pendingtask['pending'] != null && 
-                                            controller.pendingtask['pending'] >0
-                                        ? controller.pendingtask['pending'].toString()
+                                    controller.pendingtask['pending'] != null &&
+                                            controller.pendingtask['pending'] >
+                                                0
+                                        ? controller.pendingtask['pending']
+                                            .toString()
                                         : '0',
                                     style: TextStyle(
                                       fontSize: Get.width * .03,
@@ -158,11 +160,9 @@ class HomeView extends GetView<HomeController> {
                           )
                         ],
                       ),
-                     
                       dashboardCard(
                         text: 'Previous List',
                         image: 'assets/icon/list.png',
-
                         onPressed: () {
                           Get.toNamed(Routes.PREVIOUSLIST);
                         },
@@ -210,7 +210,8 @@ class HomeView extends GetView<HomeController> {
                                     text: task['billboard_detail']?['title'] ??
                                         'Untitled',
                                     status: task['is_accepeted'] ?? 'UNKNOWN',
-                                    onPressed: () => controller.opendialog,
+                                    onPressed: () => controller.opendialog(
+                                        uuid: task['uuid']),
                                   ))
                               .toList(),
                         );

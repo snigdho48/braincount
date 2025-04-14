@@ -42,18 +42,46 @@ class HomeController extends GetxController {
         });
     result.fold((response) {
       pendingtask.clear();
-      print(response);
       pendingtask.value = response;
     }, (error) {
       Get.snackbar('Error', 'Something went wrong',
           snackPosition: SnackPosition.TOP,
           isDismissible: true,
           icon: const Icon(Icons.error, color: Colors.red),
-          duration: const Duration(seconds: 5));
+          duration: const Duration(seconds: 3));
     });
   }
 
-  void opendialog() {
+  void accepetTask({String? uuid, String? status}) async {
+    final result = await request.send(
+        url: '${baseUrl}monitoring_request/',
+        method: RequestType.PATCH,
+        header: {
+          'Authorization': 'Bearer ${storage.read('token')}',
+          'Accept': 'application/json',
+        },
+        resultOverlay: false,
+        body: {
+          'is_accepeted': status,
+          'uuid': uuid,
+        });
+    result.fold((response) {
+      tasks();
+      Get.snackbar('Success', 'Task accepted successfully',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.check, color: Colors.green),
+          duration: const Duration(seconds: 3));
+    }, (error) {
+      Get.snackbar('Error', 'Something went wrong',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.error, color: Colors.red),
+          duration: const Duration(seconds: 3));
+    });
+  }
+
+  void opendialog({String? uuid}) {
     Get.defaultDialog(
       title: 'Task Acceptance',
       titlePadding: EdgeInsets.only(top: Get.height * .02),
@@ -77,6 +105,7 @@ class HomeController extends GetxController {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    accepetTask(uuid: uuid, status: 'ACCEPTED');
                     Get.back();
                   },
                   child: const Text(
@@ -94,9 +123,9 @@ class HomeController extends GetxController {
                   ),
                 ),
                 ElevatedButton(
-                  child: const Text('Reject',
-                      style: TextStyle(color: Colors.white)),
+                  child: Text('Reject', style: TextStyle(color: Colors.white)),
                   onPressed: () {
+                    accepetTask(uuid: uuid, status: 'REJECTED');
                     Get.back();
                   },
                   style: ElevatedButton.styleFrom(
