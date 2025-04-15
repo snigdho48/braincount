@@ -17,8 +17,11 @@ class LoginController extends GetxController {
 
   final count = 0.obs;
   @override
-  void onInit() {
+  void onInit()async  {
     super.onInit();
+      if (await storage.read('token') != null) {
+      Get.offAllNamed(Routes.HOME);
+    }
   }
 
   @override
@@ -34,7 +37,7 @@ class LoginController extends GetxController {
   void login() async {
     // validate email with getx
     if (!GetUtils.isUsername(email.text)) {
-      Get.snackbar('Error', 'Please enter a valid email address',
+      Get.snackbar('Error', 'Please enter a valid username address',
           snackPosition: SnackPosition.TOP,
           isDismissible: true,
           icon: const Icon(Icons.error, color: Colors.red),

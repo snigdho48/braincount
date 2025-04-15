@@ -2,6 +2,7 @@ import 'package:braincount/app/modules/custom/appbar.dart';
 import 'package:braincount/app/modules/custom/bottomnav.dart';
 import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:braincount/app/modules/custom/dashboardtasklistcard.dart';
+import 'package:braincount/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -13,7 +14,7 @@ class PendinglistView extends GetView<PendinglistController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(context, back: true),
+      appBar: appBarWidget(context, back: true,onBack:()=>Get.offAllNamed(Routes.HOME)),
       bottomNavigationBar: CustomBottomNavigationBar(),
       body: backgroundColorLinear(
           child: SizedBox(

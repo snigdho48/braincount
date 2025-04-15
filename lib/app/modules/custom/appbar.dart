@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_storage/get_storage.dart';
 
 PreferredSize appBarWidget(BuildContext context,
-    {bool threedot = true, bool back = false}) {
+    {bool threedot = true, bool back = false, Function()? onBack}) {
   var isSubroute = Get.currentRoute.split('/').length > 2;
   final storage = GetStorage();
   return PreferredSize(
@@ -34,7 +34,7 @@ PreferredSize appBarWidget(BuildContext context,
               return IconButton(
                 icon: Icon(Icons.arrow_back_ios),
                 padding: EdgeInsets.only(left: Get.width * .05),
-                onPressed: () {
+                onPressed:onBack ?? () {
                   Get.back();
                 },
               );

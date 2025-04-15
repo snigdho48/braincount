@@ -11,6 +11,7 @@ class LoginView extends GetView<LoginController> {
   const LoginView({super.key});
   @override
   Widget build(BuildContext context) {
+  
     return Scaffold(
         appBar: appBarWidget(context),
         body: backgroundColorLinear(

@@ -46,13 +46,13 @@ class ProfileView extends GetView<ProfileController> {
 
                   // Name
                   Text(
-                    'John Doe',
+                    'Md. Atiquzzaman Snigdho',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
 
                   // Bio/Description
                   Text(
-                    'This is a short description about the user. Feel free to customize it.',
+                    'Supervisor at Braincount',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 16),
                   ),
@@ -63,7 +63,7 @@ class ProfileView extends GetView<ProfileController> {
                     children: [
                       Icon(Icons.email, color: Colors.blue),
                       SizedBox(width: 10),
-                      Text('john.doe@example.com',
+                      Text('snigdho@gmail.com',
                           style: TextStyle(fontSize: 16)),
                     ],
                   ),
@@ -72,7 +72,7 @@ class ProfileView extends GetView<ProfileController> {
                     children: [
                       Icon(Icons.phone, color: Colors.blue),
                       SizedBox(width: 10),
-                      Text('+1 234 567 890', style: TextStyle(fontSize: 16)),
+                      Text('+8801775350203', style: TextStyle(fontSize: 16)),
                     ],
                   ),
 

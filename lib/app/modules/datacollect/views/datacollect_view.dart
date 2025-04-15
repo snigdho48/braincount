@@ -94,52 +94,54 @@ class DatacollectView extends GetView<DatacollectController> {
                           );
                         }),
                       ),
-                      Row(
-                        children: [
-                          // Billboard status with DropdownButton
-                          Container(
-                            padding: EdgeInsets.all(12),
-                            width: Get.width * .9,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Obx(() {
+                      Obx(() {
                               if (controller.statusList.isEmpty) {
                                 return Center(
                                   child: CircularProgressIndicator(),
                                 );
                               }
-                              return SizedBox(
-                                // Replace Expanded with SizedBox
-                                width: 200, // Set the desired width
-                                child: DropdownButtonFormField(
-                                  dropdownColor: Colors.white,
-                                  value: controller.selectedStatus.value,
-                                  items: controller.statusList
-                                      .map(( status) {
-                                    return DropdownMenuItem(
-                                      value: status,
-                                      child: Text(status),
-                                    );
-                                  }).toList(),
-                                  onChanged: ( newValue) {
-                                    if (newValue != null &&
-                                        controller.statusList
-                                            .contains(newValue)) {
-                                      controller.selectedStatus.value =
-                                          newValue.toString();
-                                    }
-                                  },
-                                  decoration: InputDecoration(
-                                    labelText: 'Billboard Status',
-                                    border: OutlineInputBorder(),
+                              return Row(
+                          children: [
+                            // Billboard status with DropdownButton
+                            Container(
+                              padding: EdgeInsets.all(12),
+                              width: Get.width * .9,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child:  SizedBox(
+                                  // Replace Expanded with SizedBox
+                                  width: 200, // Set the desired width
+                                  child: DropdownButtonFormField(
+                                    dropdownColor: Colors.white,
+                                    value: controller.selectedStatus.value,
+                                    items: controller.statusList
+                                        .map(( status) {
+                                      return DropdownMenuItem(
+                                        value: status,
+                                        child: Text(status),
+                                      );
+                                    }).toList(),
+                                    onChanged: ( newValue) {
+                                      if (newValue != null &&
+                                          controller.statusList
+                                              .contains(newValue)) {
+                                        controller.selectedStatus.value =
+                                            newValue.toString();
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                      labelText: 'Billboard Status',
+                                      border: OutlineInputBorder(),
+                                    ),
                                   ),
-                                ),
-                              );
-                            }),
-                          ),
-                        ],
+                              
+                              ),
+                            ),
+                          ],
+                        );
+                      }
                       ),
                       Container(
                         padding: EdgeInsets.all(12),
@@ -186,21 +188,40 @@ class DatacollectView extends GetView<DatacollectController> {
                                     : SizedBox(
                                         width: 100,
                                         height: 100,
+                                    
+                                    
                                         child: ElevatedButton(
                                           onPressed: () {
                                             controller.navcontroller
                                                 .opencamera(type: 'left');
                                           },
-                                          child: Text('Left',
-                                              style: TextStyle(
-                                                fontSize: Get.width * 0.04,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              )),
+                                          child: Container(
+                                            decoration:BoxDecoration(
+                                              
+                                              image: DecorationImage(
+                                                image: Image.asset(
+                                                  'assets/image/left.jpeg',
+                                                  fit: BoxFit.cover,
+                                                  width: 100 ,
+                                                  height: 100,
+                                                ).image
+                                    
+                                                
+                                              ),
+                                              color: Color(0xFF4CAF50),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                color: Color(0xFF4CAF50),
+                                                width: 5,
+                                              ),
+                                               
+                                            ),
+                                            
+                                          ),
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: Color(0xFF4CAF50),
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 16),
+                                            backgroundColor: Colors.transparent,
+                                            padding: EdgeInsets.zero,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10),
@@ -226,16 +247,27 @@ class DatacollectView extends GetView<DatacollectController> {
                                             controller.navcontroller
                                                 .opencamera(type: 'right');
                                           },
-                                          child: Text('right',
-                                              style: TextStyle(
-                                                fontSize: Get.width * 0.04,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              )),
+                                          child:  Container(
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: Image.asset(
+                                                'assets/image/right.jpeg',
+                                                fit: BoxFit.cover,
+                                                width: 100,
+                                                height: 100,
+                                              ).image),
+                                              color: Color(0xFF4CAF50),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                color: Color(0xFF4CAF50),
+                                                width: 5,
+                                              ),
+                                            ),
+                                          ),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Color(0xFF4CAF50),
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 16),
+                                            padding: EdgeInsets.zero,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10),
@@ -261,16 +293,26 @@ class DatacollectView extends GetView<DatacollectController> {
                                             controller.navcontroller
                                                 .opencamera(type: 'front');
                                           },
-                                          child: Text('Front',
-                                              style: TextStyle(
-                                                fontSize: Get.width * 0.04,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              )),
+                                          child:  Container(
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: Image.asset(
+                                                'assets/image/front.jpeg',
+                                                fit: BoxFit.cover,
+                                                width: 100,
+                                              ).image),
+                                              color: Color(0xFF4CAF50),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                color: Color(0xFF4CAF50),
+                                                width: 5,
+                                              ),
+                                            ),
+                                          ),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Color(0xFF4CAF50),
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 16),
+                                            padding: EdgeInsets.zero,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10),
@@ -296,16 +338,26 @@ class DatacollectView extends GetView<DatacollectController> {
                                             controller.navcontroller
                                                 .opencamera(type: 'close');
                                           },
-                                          child: Text('Close',
-                                              style: TextStyle(
-                                                fontSize: Get.width * 0.04,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              )),
+                                          child:  Container(
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: Image.asset(
+                                                'assets/image/close.jpeg',
+                                                fit: BoxFit.fitWidth,
+                                                width: 100,
+                                              ).image),
+                                              color: Color(0xFF4CAF50),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                color: Color(0xFF4CAF50),
+                                                width: 5,
+                                              ),
+                                            ),
+                                          ),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Color(0xFF4CAF50),
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 16),
+                                            padding: EdgeInsets.zero,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10),

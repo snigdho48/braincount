@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:braincount/app/data/constants.dart';
 import 'package:braincount/app/modules/custom/navcontroller.dart';
 import 'package:braincount/app/modules/datacollect/model/monitoring_model/monitoring_model.dart';
-import 'package:braincount/app/routes/app_pages.dart';
 import 'package:camera/camera.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -18,7 +17,7 @@ class DatacollectController extends NavController {
   final lat = 0.0.obs;
   final lon = 0.0.obs;
   final locationStatus = ''.obs;
-  final selectedStatus = 'Good'.obs;
+  final selectedStatus = ''.obs;
   final commentController = TextEditingController().obs;
   final navcontroller = Get.put(NavController());
   final request = oneRequest();
@@ -35,9 +34,9 @@ class DatacollectController extends NavController {
   void onInit() {
     super.onInit();
     // Initialize the camera controller
-    navcontroller.initializeCamera();
     _getLocation();
     uuid.value = Get.arguments;
+    navcontroller.imageList.clear();
     getStatus();
     getdata(uuid: uuid.value);
   }
@@ -57,6 +56,11 @@ class DatacollectController extends NavController {
   @override
   void dispose() {
     disableCamera();
+    navcontroller.imageList.clear();
+    commentController.value.clear();
+    selectedStatus.value = statusList[0];
+    model.value = [];
+    updatedmodel.value = null;
     super.dispose();
   }
 
@@ -73,6 +77,7 @@ class DatacollectController extends NavController {
         statusList.clear();
         print(response);
         statusList.value = response['status'];
+        selectedStatus.value = statusList[0];
       }, (error) {
         Get.snackbar('Error', 'Something went wrong',
             snackPosition: SnackPosition.TOP,
@@ -138,18 +143,14 @@ class DatacollectController extends NavController {
     );
 
     result.fold((response) {
+  
+      Get.back();
       Get.snackbar('Success', 'Data submitted successfully',
           snackPosition: SnackPosition.TOP,
           isDismissible: true,
           icon: const Icon(Icons.check, color: Colors.green),
           duration: const Duration(seconds: 3));
-          navcontroller.imageList.clear();
-    navcontroller.imageList.refresh();
-    commentController.value.clear();
-    selectedStatus.value = '';
-    model.value = [];
-    updatedmodel.value = null;
-    Get.back();
+
     }, (error) {
       Get.snackbar('Error', 'Something went wrong',
           snackPosition: SnackPosition.TOP,
@@ -186,7 +187,7 @@ class DatacollectController extends NavController {
       if (updatedmodel.value == null) {
         Get.back();
 
-        Get.snackbar('Error', 'No data found',
+        Get.snackbar('Error', 'Data Already Updated',
             snackPosition: SnackPosition.TOP,
             isDismissible: true,
             icon: const Icon(Icons.error, color: Colors.red),
