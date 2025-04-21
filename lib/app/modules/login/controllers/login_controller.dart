@@ -17,9 +17,9 @@ class LoginController extends GetxController {
 
   final count = 0.obs;
   @override
-  void onInit()async  {
+  void onInit() async {
     super.onInit();
-      if (await storage.read('token') != null) {
+    if (await storage.read('token') != null) {
       Get.offAllNamed(Routes.HOME);
     }
   }

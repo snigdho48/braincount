@@ -12,12 +12,13 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+import 'package:multi_dropdown/multi_dropdown.dart';
 
 class DatacollectController extends NavController {
   final lat = 0.0.obs;
   final lon = 0.0.obs;
   final locationStatus = ''.obs;
-  final selectedStatus = ''.obs;
+  final selectedStatus = [].obs;
   final commentController = TextEditingController().obs;
   final navcontroller = Get.put(NavController());
   final request = oneRequest();
@@ -25,15 +26,14 @@ class DatacollectController extends NavController {
   final uuid = ''.obs;
   final model = Rx<List<MonitoringModel>>([]);
   final updatedmodel = Rx<MonitoringModel?>(null);
+  final statusMultiSelectController = MultiSelectController<String>().obs;
+  final commentFocusNode = FocusNode().obs;
 
-  final statusList = [
-
-  ].obs;
+  final statusList = [].obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Initialize the camera controller
     _getLocation();
     uuid.value = Get.arguments;
     navcontroller.imageList.clear();
@@ -64,30 +64,31 @@ class DatacollectController extends NavController {
     super.dispose();
   }
 
-  void getStatus()async{
-      final result = await request.send(url: '${baseUrl}monitoring/billboard-status/',
+  void getStatus() async {
+    final result = await request.send(
+      url: '${baseUrl}monitoring/billboard-status/',
       method: RequestType.GET,
       header: {
         'Authorization': 'Bearer ${storage.read('token')}',
         'Accept': 'application/json',
       },
       resultOverlay: false,
-      );
-      result.fold((response) {
-        statusList.clear();
-        print(response);
-        statusList.value = response['status'];
-        selectedStatus.value = statusList[0];
-      }, (error) {
-        Get.snackbar('Error', 'Something went wrong',
-            snackPosition: SnackPosition.TOP,
-            isDismissible: true,
-            icon: const Icon(Icons.error, color: Colors.red),
-            duration: const Duration(seconds: 3));
-      });
+    );
+    result.fold((response) {
+      statusList.clear();
+      print(response);
+      statusList.value = response['status'];
+      selectedStatus.value = [statusList[0]];
+    }, (error) {
+      Get.snackbar('Error', 'Something went wrong',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.error, color: Colors.red),
+          duration: const Duration(seconds: 3));
+    });
   }
 
-  void postData()async {
+  void postData() async {
     if (navcontroller.imageList.length < 4) {
       Get.snackbar('Error', 'Please take all the photo',
           snackPosition: SnackPosition.TOP,
@@ -96,7 +97,7 @@ class DatacollectController extends NavController {
           duration: const Duration(seconds: 3));
       return;
     }
-    if (selectedStatus.value == '') {
+    if (selectedStatus.isEmpty) {
       Get.snackbar('Error', 'Please select status',
           snackPosition: SnackPosition.TOP,
           isDismissible: true,
@@ -104,11 +105,10 @@ class DatacollectController extends NavController {
           duration: const Duration(seconds: 3));
       return;
     }
-   final result = await request.send(
+    final result = await request.send(
       url: '${baseUrl}monitoring/',
       method: RequestType.PATCH,
       formData: true,
-
       header: {
         'Authorization': 'Bearer ${storage.read('token')}',
       },
@@ -139,18 +139,29 @@ class DatacollectController extends NavController {
                 .firstWhere((e) => e['type'] == 'right')['file']
                 .path),
             filename: 'right.jpg'),
+        'extra_images': navcontroller.imageList
+            .where((e) =>
+                e['type'] != 'left' &&
+                e['type'] != 'front' &&
+                e['type'] != 'close' &&
+                e['type'] != 'right')
+            .toList()
+            .asMap()
+            .entries
+            .map((entry) => request.file(
+                file: File(entry.value['file'].path),
+                filename: '${updatedmodel.value?.uuid}_extra_${entry.key}.jpg'))
+            .toList(),
       },
     );
 
     result.fold((response) {
-  
       Get.back();
       Get.snackbar('Success', 'Data submitted successfully',
           snackPosition: SnackPosition.TOP,
           isDismissible: true,
           icon: const Icon(Icons.check, color: Colors.green),
           duration: const Duration(seconds: 3));
-
     }, (error) {
       Get.snackbar('Error', 'Something went wrong',
           snackPosition: SnackPosition.TOP,
@@ -158,9 +169,6 @@ class DatacollectController extends NavController {
           icon: const Icon(Icons.error, color: Colors.red),
           duration: const Duration(seconds: 3));
     });
-    
-    
-
   }
 
   void getdata({
@@ -180,11 +188,19 @@ class DatacollectController extends NavController {
     );
     result.fold((response) {
       model.value = [];
-      model.value =
-          (response as List).map((e) => MonitoringModel.fromJson(jsonEncode(e))).toList();
-        
-      updatedmodel.value = model.value.firstWhereOrNull((e) => e.left == null && e.right == null && e.status == null && e.comment == null && e.front == null && e.close == null);
+      print(response);
+      model.value = (response as List)
+          .map((e) => MonitoringModel.fromJson(jsonEncode(e)))
+          .toList();
+
+      updatedmodel.value = model.value.firstWhereOrNull((e) =>
+          e.left == null &&
+          e.right == null &&
+          (e.comment == '' || e.comment == null) &&
+          e.front == null &&
+          e.close == null);
       if (updatedmodel.value == null) {
+        print(model.value);
         Get.back();
 
         Get.snackbar('Error', 'Data Already Updated',
@@ -192,10 +208,9 @@ class DatacollectController extends NavController {
             isDismissible: true,
             icon: const Icon(Icons.error, color: Colors.red),
             duration: const Duration(seconds: 2));
-            return;
+        return;
       }
-
-          }, (error) {
+    }, (error) {
       Get.snackbar('Error', 'Something went wrong',
           snackPosition: SnackPosition.TOP,
           isDismissible: true,
@@ -245,14 +260,13 @@ class DatacollectController extends NavController {
                       ),
                     ),
                     builder: (BuildContext context, int index) {
-                      final imageFile =
-                          File(navcontroller.imageList[index]['file'].path);
+
 
                       return PhotoViewGalleryPageOptions(
-                        imageProvider: FileImage(imageFile),
+                        imageProvider:navcontroller.imageList[index]['file'] == null ? null: FileImage( File(navcontroller.imageList[index]['file'].path)),
                         initialScale: PhotoViewComputedScale.contained * .95,
-                        heroAttributes:
-                            PhotoViewHeroAttributes(tag: imageFile.path),
+                        heroAttributes:navcontroller.imageList[index]['file'] == null ? null:  // Use the file path as the hero tag
+                            PhotoViewHeroAttributes(tag:  File(navcontroller.imageList[index]['file'].path).path),
                       );
                     },
                   ),

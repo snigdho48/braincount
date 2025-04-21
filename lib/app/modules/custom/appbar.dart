@@ -34,9 +34,10 @@ PreferredSize appBarWidget(BuildContext context,
               return IconButton(
                 icon: Icon(Icons.arrow_back_ios),
                 padding: EdgeInsets.only(left: Get.width * .05),
-                onPressed:onBack ?? () {
-                  Get.back();
-                },
+                onPressed: onBack ??
+                    () {
+                      Get.back();
+                    },
               );
             }
             if (!isSubroute)

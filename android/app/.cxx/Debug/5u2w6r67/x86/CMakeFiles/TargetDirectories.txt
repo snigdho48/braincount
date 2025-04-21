@@ -1,0 +1,2 @@
+D:/Work/braincount/android/app/.cxx/Debug/5u2w6r67/x86/CMakeFiles/edit_cache.dir
+D:/Work/braincount/android/app/.cxx/Debug/5u2w6r67/x86/CMakeFiles/rebuild_cache.dir

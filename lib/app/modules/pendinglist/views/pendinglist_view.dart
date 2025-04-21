@@ -14,7 +14,8 @@ class PendinglistView extends GetView<PendinglistController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(context, back: true,onBack:()=>Get.offAllNamed(Routes.HOME)),
+      appBar: appBarWidget(context,
+          back: true, onBack: () => Get.offAllNamed(Routes.HOME)),
       bottomNavigationBar: CustomBottomNavigationBar(),
       body: backgroundColorLinear(
           child: SizedBox(

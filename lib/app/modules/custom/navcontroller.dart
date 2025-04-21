@@ -31,7 +31,7 @@ class NavController extends GetxController {
   }
 
   void removeImage(String type) {
-    print(type);
+
     imageList.removeWhere((element) => element['type'] == type);
   }
 
@@ -48,12 +48,12 @@ class NavController extends GetxController {
   }
 
   void opencamera({required String type}) async {
-    print(Get.currentRoute);
+    await initializeCamera();
     if (Get.currentRoute == "/dataCollect") {
-      if (imageList.length == 4) {
+      if (imageList.length == 8) {
         Get.snackbar(
           'Limit Over',
-          'Cannot take more than 4 images',
+          'Cannot take more than 8 images',
           snackPosition: SnackPosition.TOP,
           isDismissible: true,
           icon: const Icon(Icons.error, color: Colors.red),
@@ -182,7 +182,7 @@ class NavController extends GetxController {
     }
   }
 
-  void initializeCamera() async {
+  Future<void> initializeCamera() async {
     try {
       final cameras = await availableCameras();
       final firstCamera = cameras.first;

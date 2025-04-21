@@ -7,7 +7,6 @@ class MonitoringModel {
   String? uuid;
   num? latitude;
   num? longitude;
-  String? status;
   String? billboard;
   String? front;
   String? left;
@@ -23,7 +22,6 @@ class MonitoringModel {
     this.uuid,
     this.latitude,
     this.longitude,
-    this.status,
     this.billboard,
     this.front,
     this.left,
@@ -38,7 +36,7 @@ class MonitoringModel {
 
   @override
   String toString() {
-    return 'MonitoringModel(uuid: $uuid, latitude: $latitude, longitude: $longitude, status: $status, billboard: $billboard, front: $front, left: $left, right: $right, close: $close, comment: $comment, createdAt: $createdAt, updatedAt: $updatedAt, user: $user, billboardDetail: $billboardDetail)';
+    return 'MonitoringModel(uuid: $uuid, latitude: $latitude, longitude: $longitude billboard: $billboard, front: $front, left: $left, right: $right, close: $close, comment: $comment, createdAt: $createdAt, updatedAt: $updatedAt, user: $user, billboardDetail: $billboardDetail)';
   }
 
   factory MonitoringModel.fromMap(Map<String, dynamic> data) {
@@ -46,7 +44,6 @@ class MonitoringModel {
       uuid: data['uuid'] as String?,
       latitude: data['latitude'] as num?,
       longitude: data['longitude'] as num?,
-      status: data['status'] as String?,
       billboard: data['billboard'] as String?,
       front: data['front'] as String?,
       left: data['left'] as String?,
@@ -73,7 +70,6 @@ class MonitoringModel {
         'uuid': uuid,
         'latitude': latitude,
         'longitude': longitude,
-        'status': status,
         'billboard': billboard,
         'front': front,
         'left': left,

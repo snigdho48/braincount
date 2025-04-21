@@ -63,8 +63,7 @@ class ProfileView extends GetView<ProfileController> {
                     children: [
                       Icon(Icons.email, color: Colors.blue),
                       SizedBox(width: 10),
-                      Text('snigdho@gmail.com',
-                          style: TextStyle(fontSize: 16)),
+                      Text('snigdho@gmail.com', style: TextStyle(fontSize: 16)),
                     ],
                   ),
                   Row(

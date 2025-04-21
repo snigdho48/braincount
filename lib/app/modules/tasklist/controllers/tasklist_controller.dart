@@ -8,7 +8,13 @@ class TasklistController extends GetxController {
   final request = oneRequest();
   final storage = GetStorage();
   final pendingtask = {}.obs;
-
+  final selectedStatus = 'ALL'.obs;
+  final statusList = [
+    'ALL',
+    'ACCEPTED',
+    'REJECTED',
+    'PENDING',
+  ].obs;
   @override
   void onInit() {
     super.onInit();
@@ -16,6 +22,9 @@ class TasklistController extends GetxController {
   }
 
   void tasks() async {
+    pendingtask.clear();
+    final queryParams =
+        selectedStatus.value != 'ALL' ? {'status': selectedStatus.value} : null;
     final result = await request.send(
       url: '${baseUrl}monitoring_request/',
       method: RequestType.GET,
@@ -24,6 +33,7 @@ class TasklistController extends GetxController {
         'Accept': 'application/json',
       },
       resultOverlay: false,
+      queryParameters: queryParams,
     );
     result.fold((response) {
       pendingtask.clear();
