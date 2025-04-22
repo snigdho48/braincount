@@ -105,6 +105,17 @@ class DatacollectController extends NavController {
           duration: const Duration(seconds: 3));
       return;
     }
+    print(navcontroller.imageList
+            .where((e) =>
+                e['type'] != 'left' &&
+                e['type'] != 'front' &&
+                e['type'] != 'close' &&
+                e['type'] != 'right')
+            .toList()
+            .map((e) => 
+               e['file'])
+                
+          );
     final result = await request.send(
       url: '${baseUrl}monitoring/',
       method: RequestType.PATCH,
@@ -146,11 +157,9 @@ class DatacollectController extends NavController {
                 e['type'] != 'close' &&
                 e['type'] != 'right')
             .toList()
-            .asMap()
-            .entries
-            .map((entry) => request.file(
-                file: File(entry.value['file'].path),
-                filename: '${updatedmodel.value?.uuid}_extra_${entry.key}.jpg'))
+            .map((e) => request.file(
+                file: File(e['file'].path), filename: e['file'].name))
+
             .toList(),
       },
     );

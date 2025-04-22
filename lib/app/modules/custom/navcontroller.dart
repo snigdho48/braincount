@@ -48,6 +48,7 @@ class NavController extends GetxController {
   }
 
   void opencamera({required String type}) async {
+    print('imageList: $imageList');
     await initializeCamera();
     if (Get.currentRoute == "/dataCollect") {
       if (imageList.length == 8) {

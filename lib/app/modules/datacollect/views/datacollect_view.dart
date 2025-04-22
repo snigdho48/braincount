@@ -419,12 +419,9 @@ class DatacollectView extends GetView<DatacollectController> {
                                     e['type'] != 'right' &&
                                     e['type'] != 'left')
                                 .toList().length;
-                                controller.navcontroller.imageList.add({
-                                  'file': null,
-                                  'type': 'extra_${length+1}',
-                                });
+                       
                             controller.navcontroller.opencamera(
-                                type: 'extra_$length');
+                                type: 'extra_${length+1}');
                             controller.commentFocusNode.value.unfocus();
                           },
                           style: ElevatedButton.styleFrom(
