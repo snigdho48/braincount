@@ -9,10 +9,10 @@ abstract class Routes {
   static const TASKLIST = _Paths.TASKLIST;
   static const NOTIFICATIONS = _Paths.NOTIFICATIONS;
   static const PROFILE = _Paths.PROFILE;
-  static const PENDINGLIST = _Paths.PENDINGLIST;
-  static const PREVIOUSLIST = _Paths.PREVIOUSLIST;
+  static const SUBMISSIONLIST = _Paths.SUBMISSIONLIST;
   static const DATACOLLECT = _Paths.DATACOLLECT;
   static const WITHDRAW = _Paths.WITHDRAW;
+  static const SUBMISSION_DETAILS = _Paths.SUBMISSION_DETAILS;
 }
 
 abstract class _Paths {
@@ -23,8 +23,9 @@ abstract class _Paths {
   static const TASKLIST = '/taskList';
   static const NOTIFICATIONS = '/notifications';
   static const PROFILE = '/profile';
-  static const PENDINGLIST = '/pendingList';
-  static const PREVIOUSLIST = '/previousList';
+
+  static const SUBMISSIONLIST = '/submissionList';
   static const DATACOLLECT = '/dataCollect';
   static const WITHDRAW = '/withdraw';
+  static const SUBMISSION_DETAILS = '/submissionDetails';
 }

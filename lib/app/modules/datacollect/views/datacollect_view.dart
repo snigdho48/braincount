@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:braincount/app/modules/custom/appbar.dart';
 import 'package:braincount/app/modules/custom/camerbtn.dart';
 import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:braincount/app/modules/custom/map.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
 
 import 'package:get/get.dart';
@@ -185,7 +182,7 @@ class DatacollectView extends GetView<DatacollectController> {
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           )),
-                    
+
                       Obx(() => SizedBox(
                             width: Get.width * 0.9,
                             child: SingleChildScrollView(
@@ -384,8 +381,8 @@ class DatacollectView extends GetView<DatacollectController> {
                               ]),
                             ),
                           )),
-                  
-                    Obx(() => Row(
+
+                      Obx(() => Row(
                             children: controller.navcontroller.imageList
                                 .where((e) =>
                                     e['type'] != 'close' &&
@@ -393,35 +390,33 @@ class DatacollectView extends GetView<DatacollectController> {
                                     e['type'] != 'right' &&
                                     e['type'] != 'left')
                                 .toList()
-                            
                                 .map((entry) {
-                              if (entry['file']== null){
+                              if (entry['file'] == null) {
                                 return SizedBox.shrink();
                               }
                               return cameraButton(
                                 type: entry['type'],
                                 file: entry['file'],
-                                        
                                 controller: controller,
                               );
                             }).toList(),
                           )),
-                   SizedBox(
+                      SizedBox(
                         width: 100,
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
-
-                             var length=controller.navcontroller.imageList
+                            var length = controller.navcontroller.imageList
                                 .where((e) =>
                                     e['type'] != 'close' &&
                                     e['type'] != 'front' &&
                                     e['type'] != 'right' &&
                                     e['type'] != 'left')
-                                .toList().length;
-                       
-                            controller.navcontroller.opencamera(
-                                type: 'extra_${length+1}');
+                                .toList()
+                                .length;
+
+                            controller.navcontroller
+                                .opencamera(type: 'extra_${length + 1}');
                             controller.commentFocusNode.value.unfocus();
                           },
                           style: ElevatedButton.styleFrom(
@@ -433,7 +428,6 @@ class DatacollectView extends GetView<DatacollectController> {
                           ),
                           child: Container(
                             decoration: BoxDecoration(
-                              
                               color: Color(0xFF4CAF50),
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(
@@ -450,26 +444,26 @@ class DatacollectView extends GetView<DatacollectController> {
                           ),
                         ),
                       ),
-                          //submit button
-                          SizedBox(
-                              width: Get.width * .9,
-                              child: ElevatedButton(
-                                onPressed: controller.postData,
-                                child: Text('Submit',
-                                    style: TextStyle(
-                                      fontSize: Get.width * 0.04,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    )),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFF4CAF50),
-                                  padding: EdgeInsets.symmetric(vertical: 16),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ),
+                      //submit button
+                      SizedBox(
+                        width: Get.width * .9,
+                        child: ElevatedButton(
+                          onPressed: controller.postData,
+                          child: Text('Submit',
+                              style: TextStyle(
+                                fontSize: Get.width * 0.04,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              )),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF4CAF50),
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
+                          ),
+                        ),
+                      ),
                     ])),
           ],
         ),

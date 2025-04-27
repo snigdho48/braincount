@@ -1,22 +1,17 @@
 import 'package:braincount/app/modules/custom/appbar.dart';
-import 'package:braincount/app/modules/custom/bottomnav.dart';
 import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:braincount/app/modules/custom/dashboardtasklistcard.dart';
+import 'package:braincount/app/modules/submissionlist/controllers/submissionlist_controller.dart';
 import 'package:braincount/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/previouslist_controller.dart';
-
-class PreviouslistView extends GetView<PreviouslistController> {
-  const PreviouslistView({super.key});
+class SubmissionlistView extends GetView<SubmissionListController> {
+  const SubmissionlistView({super.key});
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: appBarWidget(context, back: true),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-        bottomNavigationBar: CustomBottomNavigationBar(),
         body: backgroundColorLinear(
           child: SizedBox(
               height: Get.height,
@@ -32,29 +27,24 @@ class PreviouslistView extends GetView<PreviouslistController> {
                   spacing: Get.height * .015,
                   children: [
                     Obx(() {
-                      final data = controller.pendingtask;
-
+                      final data = controller.pendingtask
+                          .where((task) => task.approvalStatus != null)
+                          .toList();
                       // Null or structure check
-                      if (data.isEmpty || data['monitoring'] == null) {
+                      if (data.isEmpty) {
                         return const Center(
                             child: Text("No monitoring data available."));
                       }
 
-                      List monitoring = data['monitoring'];
-
                       return Column(
                         spacing: 10,
-                        children: monitoring
+                        children: data
                             .map<Widget>((task) => tasklistCardDashboard(
-                                  text: task['billboard_detail']?['title'] ??
-                                      'Untitled',
-                                  status: task['is_accepeted'] ?? 'UNKNOWN',
-                                  onPressed: () =>
-                                      task['is_accepeted'] == 'ACCEPTED'
-                                          ? Get.toNamed(Routes.DATACOLLECT,
-                                              arguments: task['uuid'])
-                                          : null,
-                                ))
+                                text: task.billboardDetail?.title ?? 'Untitled',
+                                status: task.approvalStatus ?? 'UNKNOWN',
+                                onPressed: () => Get.toNamed(
+                                    Routes.SUBMISSION_DETAILS,
+                                    arguments: task)))
                             .toList(),
                       );
                     }),

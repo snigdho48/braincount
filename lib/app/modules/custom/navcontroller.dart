@@ -31,7 +31,6 @@ class NavController extends GetxController {
   }
 
   void removeImage(String type) {
-
     imageList.removeWhere((element) => element['type'] == type);
   }
 
@@ -50,7 +49,7 @@ class NavController extends GetxController {
   void opencamera({required String type}) async {
     print('imageList: $imageList');
     await initializeCamera();
-    if (Get.currentRoute == "/dataCollect") {
+    if (Get.currentRoute == "/dataCollect" || Get.currentRoute == "/submissionDetails") {
       if (imageList.length == 8) {
         Get.snackbar(
           'Limit Over',

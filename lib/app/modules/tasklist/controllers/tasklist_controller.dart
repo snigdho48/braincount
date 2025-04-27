@@ -14,6 +14,7 @@ class TasklistController extends GetxController {
     'ACCEPTED',
     'REJECTED',
     'PENDING',
+    'COMPLETED',
   ].obs;
   @override
   void onInit() {

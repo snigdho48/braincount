@@ -106,16 +106,13 @@ class DatacollectController extends NavController {
       return;
     }
     print(navcontroller.imageList
-            .where((e) =>
-                e['type'] != 'left' &&
-                e['type'] != 'front' &&
-                e['type'] != 'close' &&
-                e['type'] != 'right')
-            .toList()
-            .map((e) => 
-               e['file'])
-                
-          );
+        .where((e) =>
+            e['type'] != 'left' &&
+            e['type'] != 'front' &&
+            e['type'] != 'close' &&
+            e['type'] != 'right')
+        .toList()
+        .map((e) => e['file']));
     final result = await request.send(
       url: '${baseUrl}monitoring/',
       method: RequestType.PATCH,
@@ -159,7 +156,6 @@ class DatacollectController extends NavController {
             .toList()
             .map((e) => request.file(
                 file: File(e['file'].path), filename: e['file'].name))
-
             .toList(),
       },
     );
@@ -269,13 +265,21 @@ class DatacollectController extends NavController {
                       ),
                     ),
                     builder: (BuildContext context, int index) {
-
-
                       return PhotoViewGalleryPageOptions(
-                        imageProvider:navcontroller.imageList[index]['file'] == null ? null: FileImage( File(navcontroller.imageList[index]['file'].path)),
+                        imageProvider: navcontroller.imageList[index]['file'] ==
+                                null
+                            ? null
+                            : FileImage(File(
+                                navcontroller.imageList[index]['file'].path)),
                         initialScale: PhotoViewComputedScale.contained * .95,
-                        heroAttributes:navcontroller.imageList[index]['file'] == null ? null:  // Use the file path as the hero tag
-                            PhotoViewHeroAttributes(tag:  File(navcontroller.imageList[index]['file'].path).path),
+                        heroAttributes:
+                            navcontroller.imageList[index]['file'] == null
+                                ? null
+                                : // Use the file path as the hero tag
+                                PhotoViewHeroAttributes(
+                                    tag: File(navcontroller
+                                            .imageList[index]['file'].path)
+                                        .path),
                       );
                     },
                   ),
@@ -377,7 +381,6 @@ class DatacollectController extends NavController {
     lon.value = position.longitude;
 
     enableCamera();
-    print('enable: ${cameraenable.value}');
 
     locationStatus.value = 'Location fetched successfully';
   }

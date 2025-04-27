@@ -1,13 +1,11 @@
-import 'dart:io';
-
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Widget cameraButton(
-    {required String type,
-    required XFile file,
-    required  controller}) {
+Widget imagePreview({
+  required String type,
+  required String image,
+  required controller,
+}) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -16,39 +14,31 @@ Widget cameraButton(
         children: [
           InkWell(
             onTap: () {
-              controller.preview(file, type);
+              controller.preview(image, type);
             },
             child: Container(
               margin: EdgeInsets.only(right: Get.width * 0.02),
               padding: EdgeInsets.only(top: 8),
-              child: Image.file(
-                File(file.path),
+              child: Image.network(
+                loadingBuilder: (context, child, loadingProgress) =>
+                    loadingProgress == null
+                        ? child
+                        : CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    (loadingProgress.expectedTotalBytes ?? 1)
+                                : null,
+                          ),
+                errorBuilder: (context, error, stackTrace) => Center(
+                  child: Icon(Icons.error, color: Colors.red),
+                ),
+                image,
                 width: 100,
                 height: 100,
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          Positioned(
-            right: 0,
-            top: 0,
-            child: Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle,
-              ),
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                iconSize: 16,
-                icon: Icon(Icons.close, color: Colors.white),
-                onPressed: () {
-                  controller.navcontroller.removeImage(type);
-                },
-              ),
-            ),
-          )
         ],
       ),
       Text(

@@ -120,51 +120,51 @@ class HomeView extends GetView<HomeController> {
                           navcontroller.changeIndex(1);
                         },
                       ),
-                      Stack(
-                        children: [
-                          dashboardCard(
-                            text: 'Pending List',
-                            image: 'assets/icon/list.png',
-                            onPressed: () {
-                              Get.toNamed(Routes.PENDINGLIST);
-                            },
-                          ),
-                          Positioned(
-                            right: 0,
-                            top: 0,
-                            child: Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Obx(() {
-                                return Center(
-                                  child: Text(
-                                    controller.pendingtask['pending'] != null &&
-                                            controller.pendingtask['pending'] >
-                                                0
-                                        ? controller.pendingtask['pending']
-                                            .toString()
-                                        : '0',
-                                    style: TextStyle(
-                                      fontSize: Get.width * .03,
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                );
-                              }),
-                            ),
-                          )
-                        ],
-                      ),
+                      // Stack(
+                      //   children: [
+                      //     dashboardCard(
+                      //       text: 'Pending List',
+                      //       image: 'assets/icon/list.png',
+                      //       onPressed: () {
+                      //         Get.toNamed(Routes.PENDINGLIST);
+                      //       },
+                      //     ),
+                      //     Positioned(
+                      //       right: 0,
+                      //       top: 0,
+                      //       child: Container(
+                      //         width: 24,
+                      //         height: 24,
+                      //         decoration: BoxDecoration(
+                      //           color: Colors.red,
+                      //           shape: BoxShape.circle,
+                      //         ),
+                      //         child: Obx(() {
+                      //           return Center(
+                      //             child: Text(
+                      //               controller.pendingtask['pending'] != null &&
+                      //                       controller.pendingtask['pending'] >
+                      //                           0
+                      //                   ? controller.pendingtask['pending']
+                      //                       .toString()
+                      //                   : '0',
+                      //               style: TextStyle(
+                      //                 fontSize: Get.width * .03,
+                      //                 fontWeight: FontWeight.w300,
+                      //                 color: Colors.white,
+                      //               ),
+                      //             ),
+                      //           );
+                      //         }),
+                      //       ),
+                      //     )
+                      //   ],
+                      // ),
                       dashboardCard(
-                        text: 'Previous List',
+                        text: 'Submission List',
                         image: 'assets/icon/list.png',
                         onPressed: () {
-                          Get.toNamed(Routes.PREVIOUSLIST);
+                          Get.toNamed(Routes.SUBMISSIONLIST);
                         },
                       ),
                     ],

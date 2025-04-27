@@ -17,6 +17,10 @@ Widget dashboardCard({
         ),
         padding: EdgeInsets.zero,
         backgroundBuilder: (context, states, child) => Container(
+          constraints: BoxConstraints(
+            minWidth: Get.width / 2.5,
+            minHeight: Get.width * .2,
+          ),
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -35,11 +39,11 @@ Widget dashboardCard({
             ),
           ),
           alignment: Alignment.center,
-          width: Get.width / 3.5,
-          height: Get.width / 3.4,
+          height: Get.width / 3,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
+            spacing: 10,
             children: [
               icon != null
                   ? Icon(
@@ -54,28 +58,39 @@ Widget dashboardCard({
                           height: Get.width * .08,
                         )
                       : SizedBox(),
-              Text(
-                text.split(' ').first,
-                textAlign: TextAlign.center,
-                softWrap: true,
-                overflow: TextOverflow.visible,
-                textWidthBasis: TextWidthBasis.parent,
-                style: TextStyle(
-                    fontSize: Get.width * .05,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.black87),
-              ),
-              Text(
-                text.split(' ').last,
-                textAlign: TextAlign.center,
-                softWrap: true,
-                overflow: TextOverflow.visible,
-                textWidthBasis: TextWidthBasis.parent,
-                style: TextStyle(
-                    fontSize: Get.width * .04,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.black87),
-              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  spacing: 10,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      text.split(' ').first,
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      overflow: TextOverflow.visible,
+                      textWidthBasis: TextWidthBasis.parent,
+                      style: TextStyle(
+                          fontSize: Get.width * .05,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.black87),
+                    ),
+                    Text(
+                      text.split(' ').last,
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      overflow: TextOverflow.visible,
+                      textWidthBasis: TextWidthBasis.parent,
+                      style: TextStyle(
+                          fontSize: Get.width * .05,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.black87),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),
