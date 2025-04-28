@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 Widget cameraButton(
-    {required String type,
-    required XFile file,
-    required  controller}) {
+    {required String type, required XFile file, required controller}) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.center,

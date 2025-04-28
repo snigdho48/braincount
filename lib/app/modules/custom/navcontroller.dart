@@ -49,7 +49,8 @@ class NavController extends GetxController {
   void opencamera({required String type}) async {
     print('imageList: $imageList');
     await initializeCamera();
-    if (Get.currentRoute == "/dataCollect" || Get.currentRoute == "/submissionDetails") {
+    if (Get.currentRoute == "/dataCollect" ||
+        Get.currentRoute == "/submissionDetails") {
       if (imageList.length == 8) {
         Get.snackbar(
           'Limit Over',

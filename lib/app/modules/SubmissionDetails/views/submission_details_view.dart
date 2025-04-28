@@ -4,7 +4,6 @@ import 'package:braincount/app/modules/custom/camerbtn.dart';
 import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:braincount/app/modules/custom/map.dart';
 import 'package:braincount/app/modules/custom/submissionImagePreview.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -66,6 +65,7 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                 child: CircularProgressIndicator(),
                               );
                             }
+                         
                             return Row(
                               children: [
                                 // Billboard status with DropdownButton
@@ -83,19 +83,22 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                           .statusMultiSelectController.value,
                                       items: controller.statusList
                                           .map((status) => DropdownItem<String>(
-                                              label: status, value: status))
+                                              label: status, value: status ,selected: controller.selectedStatus.contains(status)
+))
                                           .toList(),
                                       fieldDecoration: FieldDecoration(
                                         labelText: 'Billboard Status',
                                         border: OutlineInputBorder(),
                                       ),
-                                      dropdownDecoration: const DropdownDecoration(
+                                      dropdownDecoration:
+                                          const DropdownDecoration(
                                         maxHeight: 300,
                                       ),
                                       chipDecoration: const ChipDecoration(
                                         backgroundColor: Colors.blueAccent,
                                         wrap: true,
                                       ),
+                                      
                                       onSelectionChange: (selectedItems) {
                                         // Save selected statuses as list of strings
                                         controller.selectedStatus.value =
@@ -134,12 +137,11 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                   color: Colors.black,
                                 ),
                                 // want always border
-                               enabledBorder: OutlineInputBorder(
+                                enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide(
                                     color: Colors.black,
-                                    width:
-                                        1, 
+                                    width: 1,
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
@@ -159,17 +161,19 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               )),
-                    
+
                           Obx(() => SizedBox(
                                 width: Get.width * 0.9,
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(spacing: 10, children: [
                                     controller.navcontroller.imageList.any(
-                                            (element) => element['type'] == 'left')
+                                            (element) =>
+                                                element['type'] == 'left')
                                         ? cameraButton(
                                             type: 'left',
-                                            file: controller.navcontroller.imageList
+                                            file: controller
+                                                .navcontroller.imageList
                                                 .firstWhere((element) =>
                                                     element['type'] ==
                                                     'left')['file'],
@@ -182,7 +186,8 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                               onPressed: () {
                                                 controller.navcontroller
                                                     .opencamera(type: 'left');
-                                                controller.commentFocusNode.value
+                                                controller
+                                                    .commentFocusNode.value
                                                     .unfocus();
                                               },
                                               child: Container(
@@ -204,7 +209,8 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                                 ),
                                               ),
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Colors.transparent,
                                                 padding: EdgeInsets.zero,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
@@ -214,10 +220,12 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                             ),
                                           ),
                                     controller.navcontroller.imageList.any(
-                                            (element) => element['type'] == 'right')
+                                            (element) =>
+                                                element['type'] == 'right')
                                         ? cameraButton(
                                             type: 'right',
-                                            file: controller.navcontroller.imageList
+                                            file: controller
+                                                .navcontroller.imageList
                                                 .firstWhere((element) =>
                                                     element['type'] ==
                                                     'right')['file'],
@@ -230,7 +238,8 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                               onPressed: () {
                                                 controller.navcontroller
                                                     .opencamera(type: 'right');
-                                                controller.commentFocusNode.value
+                                                controller
+                                                    .commentFocusNode.value
                                                     .unfocus();
                                               },
                                               child: Container(
@@ -252,7 +261,8 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                                 ),
                                               ),
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: Color(0xFF4CAF50),
+                                                backgroundColor:
+                                                    Color(0xFF4CAF50),
                                                 padding: EdgeInsets.zero,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
@@ -262,10 +272,12 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                             ),
                                           ),
                                     controller.navcontroller.imageList.any(
-                                            (element) => element['type'] == 'front')
+                                            (element) =>
+                                                element['type'] == 'front')
                                         ? cameraButton(
                                             type: 'front',
-                                            file: controller.navcontroller.imageList
+                                            file: controller
+                                                .navcontroller.imageList
                                                 .firstWhere((element) =>
                                                     element['type'] ==
                                                     'front')['file'],
@@ -278,7 +290,8 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                               onPressed: () {
                                                 controller.navcontroller
                                                     .opencamera(type: 'front');
-                                                controller.commentFocusNode.value
+                                                controller
+                                                    .commentFocusNode.value
                                                     .unfocus();
                                               },
                                               child: Container(
@@ -299,7 +312,8 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                                 ),
                                               ),
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: Color(0xFF4CAF50),
+                                                backgroundColor:
+                                                    Color(0xFF4CAF50),
                                                 padding: EdgeInsets.zero,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
@@ -309,10 +323,12 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                             ),
                                           ),
                                     controller.navcontroller.imageList.any(
-                                            (element) => element['type'] == 'close')
+                                            (element) =>
+                                                element['type'] == 'close')
                                         ? cameraButton(
                                             type: 'close',
-                                            file: controller.navcontroller.imageList
+                                            file: controller
+                                                .navcontroller.imageList
                                                 .firstWhere((element) =>
                                                     element['type'] ==
                                                     'close')['file'],
@@ -325,7 +341,8 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                               onPressed: () {
                                                 controller.navcontroller
                                                     .opencamera(type: 'close');
-                                                controller.commentFocusNode.value
+                                                controller
+                                                    .commentFocusNode.value
                                                     .unfocus();
                                               },
                                               child: Container(
@@ -346,7 +363,8 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                                 ),
                                               ),
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: Color(0xFF4CAF50),
+                                                backgroundColor:
+                                                    Color(0xFF4CAF50),
                                                 padding: EdgeInsets.zero,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
@@ -358,13 +376,13 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                   ]),
                                 ),
                               )),
-                    
+
                           Obx(() => SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 padding: EdgeInsets.only(
                                     top: Get.height * .02,
                                     bottom: Get.height * .02),
-                            child: Row(
+                                child: Row(
                                   children: controller.navcontroller.imageList
                                       .where((e) =>
                                           e['type'] != 'close' &&
@@ -383,7 +401,7 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                     );
                                   }).toList(),
                                 ),
-                          )),
+                              )),
                           SizedBox(
                             width: 100,
                             height: 50,
@@ -397,7 +415,7 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                         e['type'] != 'left')
                                     .toList()
                                     .length;
-                    
+
                                 controller.navcontroller
                                     .opencamera(type: 'extra_${length + 1}');
                                 controller.commentFocusNode.value.unfocus();
@@ -446,7 +464,8 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                                 ),
                               ),
                             ),
-                          ), ],
+                          ),
+                        ],
                       ),
                     ),
                   ),

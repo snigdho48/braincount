@@ -23,7 +23,7 @@ class SubmissionDetailsController extends GetxController {
   final submissionData = Submission().obs;
   final statusMultiSelectController = MultiSelectController<String>().obs;
   final commentFocusNode = FocusNode().obs;
-    final lat = 0.0.obs;
+  final lat = 0.0.obs;
   final lon = 0.0.obs;
   final locationStatus = ''.obs;
   final selectedStatus = [].obs;
@@ -38,6 +38,8 @@ class SubmissionDetailsController extends GetxController {
   void onInit() {
     super.onInit();
     submissionData.value = Get.arguments as Submission;
+    commentController.value.text = submissionData.value.comment ?? '';
+
     images.value = [
       {
         'url': submissionData.value.close,
@@ -76,6 +78,7 @@ class SubmissionDetailsController extends GetxController {
   void onClose() {
     super.onClose();
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -84,7 +87,8 @@ class SubmissionDetailsController extends GetxController {
     navcontroller.camcontroller.dispose();
     navcontroller.imageList.clear();
   }
-void buildimage() async {
+
+  void buildimage() async {
     // List to hold Future results for parallel downloads
     List<Future> imageDownloads = [];
 
@@ -99,7 +103,7 @@ void buildimage() async {
           if (navcontroller.imageList
               .where((e) => e['type'] == element['type'])
               .isEmpty) {
-           navcontroller.imageList.add({
+            navcontroller.imageList.add({
               'file': xfile, // Use XFile here instead of File
               'type': element['type'],
             });
@@ -115,7 +119,7 @@ void buildimage() async {
     await Future.wait(imageDownloads);
   }
 
-Future<File> urlToFile(String imageUrl) async {
+  Future<File> urlToFile(String imageUrl) async {
     try {
       // Get temporary directory
       final Directory tempDir = await getTemporaryDirectory();
@@ -155,13 +159,15 @@ Future<File> urlToFile(String imageUrl) async {
       print('Error initializing camera: $e');
     }
   }
-    void enableCamera() async {
+
+  void enableCamera() async {
     try {
       await camcontroller.initialize();
     } catch (e) {
       print('Error enabling camera: $e');
     }
   }
+
   Future<void> _getLocation() async {
     // Check location permissions using permission_handler
     PermissionStatus permission = await Permission.location.status;
@@ -234,8 +240,6 @@ Future<File> urlToFile(String imageUrl) async {
     enableCamera();
     locationStatus.value = 'Location fetched successfully';
   }
-
-
 
   void preview(String url, String type) {
     final initialIndex = images.indexWhere((element) => element['url'] == url);
@@ -354,7 +358,13 @@ Future<File> urlToFile(String imageUrl) async {
       statusList.clear();
       print(response);
       statusList.value = response['status'];
-      selectedStatus.value = [statusList[0]];
+      print(submissionData.value.status ?? []);
+      if (submissionData.value.status != null || submissionData.value.status!.isNotEmpty) {
+        selectedStatus.value = submissionData.value.status ?? [];
+        
+      } else {
+        selectedStatus.value = [];
+      }
     }, (error) {
       Get.snackbar('Error', 'Something went wrong',
           snackPosition: SnackPosition.TOP,
@@ -384,7 +394,7 @@ Future<File> urlToFile(String imageUrl) async {
 
     final result = await request.send(
       url: '${baseUrl}monitoring/',
-      method: RequestType.PATCH,
+      method: RequestType.POST,
       formData: true,
       header: {
         'Authorization': 'Bearer ${storage.read('token')}',
@@ -394,6 +404,7 @@ Future<File> urlToFile(String imageUrl) async {
         'uuid': submissionData.value.uuid,
         'status': selectedStatus.value,
         'comment': commentController.value.text,
+        'billboard': submissionData.value.billboard,
         'latitude': lat.value,
         'longitude': lon.value,
         'left': request.file(
@@ -431,6 +442,7 @@ Future<File> urlToFile(String imageUrl) async {
 
     result.fold((response) {
       Get.back();
+      Get.back();
       Get.snackbar('Success', 'Data submitted successfully',
           snackPosition: SnackPosition.TOP,
           isDismissible: true,
@@ -444,5 +456,6 @@ Future<File> urlToFile(String imageUrl) async {
           duration: const Duration(seconds: 3));
     });
   }
+
   void resubmit() {}
 }
