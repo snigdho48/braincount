@@ -10,8 +10,19 @@ import 'package:braincount/app/modules/withdraw/controllers/withdraw_controller.
 import 'package:braincount/app/modules/notifications/controllers/notifications_controller.dart';
 import 'package:braincount/app/modules/profile/controllers/profile_controller.dart';
 
-class NavController extends GetxController {
+class NavController extends GetxController with RouteAware {
   final RxInt selectedIndex = 0.obs;
+  final RxString currentTitle = Routes.HOME.substring(1)
+      .split('/')
+      .map((word) => word.isNotEmpty
+          ? (word[0].toUpperCase() +
+              word.substring(1).replaceAllMapped(
+                    RegExp(r'([A-Z])'),
+                    (match) => ' ${match.group(0)}',
+                  ))
+          : '')
+      .join(' - ')
+      .obs;
   final cameraready = false.obs;
   final cameraclick = false.obs;
   final cameraenable = false.obs;
@@ -31,7 +42,6 @@ class NavController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
   }
 
   @override
@@ -51,7 +61,69 @@ class NavController extends GetxController {
       return;
     }
     selectedIndex.value = index;
+    updateTitle();
     refreshCurrentTab();
+  }
+  void _updateTitleByRoute(String route) {
+    // You can expand this mapping as needed
+    switch (route) {
+      case Routes.HOME:
+        currentTitle.value = capitalize(Routes.HOME);
+        break;
+      case Routes.TASKLIST:
+        currentTitle.value = capitalize(Routes.TASKLIST);
+        break;
+      case Routes.WITHDRAW:
+        currentTitle.value = capitalize(Routes.WITHDRAW);
+        break;
+      case Routes.NOTIFICATIONS:
+        currentTitle.value = capitalize(Routes.NOTIFICATIONS);
+        break;
+      case Routes.PROFILE:
+        currentTitle.value = capitalize(Routes.PROFILE);
+        break;
+      default:
+        // Fallback: use the last segment of the route as title
+        final last = route.split('/').last;
+        currentTitle.value =
+            last.isNotEmpty ? capitalize(last) : capitalize(Routes.HOME);
+    }
+  }
+
+  String capitalize(String s) => s
+      .substring(1)
+      .split('/')
+      .map((word) => word.isNotEmpty
+          ? (word[0].toUpperCase() +
+              word.substring(1).replaceAllMapped(
+                    RegExp(r'([A-Z])'),
+                    (match) => ' ${match.group(0)}',
+                  ))
+          : '')
+      .join(' - ');
+  void updateTitle() {
+    switch (selectedIndex.value) {
+      case 0:
+        _updateTitleByRoute(Routes.HOME);
+        break;
+      case 1:
+        _updateTitleByRoute(Routes.TASKLIST);
+        break;
+      case 2:
+        _updateTitleByRoute(Routes.WITHDRAW);
+        break;
+      case 3:
+        _updateTitleByRoute(Routes.NOTIFICATIONS);
+        break;
+      case 4:
+        _updateTitleByRoute(Routes.PROFILE);
+        break;
+    }
+  }
+
+  /// Call this from any page to set the app bar title dynamically
+  void setTitle(String title) {
+    currentTitle.value = title;
   }
 
   void refreshCurrentTab() {
@@ -262,4 +334,6 @@ class NavController extends GetxController {
   void disableCamera() {
     cameraenable.value = false;
   }
+
+
 }

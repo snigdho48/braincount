@@ -1,12 +1,16 @@
+import 'package:braincount/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:braincount/app/modules/custom/navcontroller.dart';
 
 PreferredSize appBarWidget(BuildContext context,
     {bool threedot = true, bool back = false, Function()? onBack}) {
   var isSubroute = Get.currentRoute.split('/').length > 2;
   final storage = GetStorage();
+  final navController = Get.find<NavController>();
+  
   return PreferredSize(
     preferredSize:
         Size(Get.width, kToolbarHeight + MediaQuery.of(context).padding.top),
@@ -21,15 +25,16 @@ PreferredSize appBarWidget(BuildContext context,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1), // Shadow color
-              blurRadius: 1, // How blurry the shadow is
-              offset: Offset(0, 2), // Horizontal and vertical displacement
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 1,
+              offset: Offset(0, 2),
             )
           ]),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Builder(builder: (context) {
+               
             if (back) {
               return IconButton(
                 icon: Icon(Icons.arrow_back_ios),
@@ -52,24 +57,30 @@ PreferredSize appBarWidget(BuildContext context,
               },
             );
           }),
-          // Displaying the current route with first letter capitalized for each word
-
-          Get.currentRoute == '/login' || Get.currentRoute == '/signup'
+       
+          // Displaying the current title from NavController
+              Get.currentRoute == '/login' || Get.currentRoute == '/signup'
               ? SizedBox.shrink()
-              : Text(
-                  Get.currentRoute
-                      .substring(1)
-                      .split('/')
-                      .map((word) => word.isNotEmpty
-                          ? (word[0].toUpperCase() +
-                              word.substring(1).replaceAllMapped(
-                                    RegExp(r'([A-Z])'),
-                                    (match) => ' ${match.group(0)}',
-                                  ))
-                          : '')
-                      .join(' - '),
-                  style: TextStyle(fontSize: 20),
-                ),
+              : (Get.currentRoute == Routes.HOME
+                  ? Expanded(
+                      child: Obx(() => Text(
+                            navController.currentTitle.value,
+                            style: TextStyle(fontSize: 20),
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          )),
+                    )
+                  : Expanded(
+                      child: Text(
+                        navController.capitalize(Get.currentRoute.toString()),
+                        style: TextStyle(fontSize: 20),
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    )),
+
 
           // Notifications IconButton
           threedot
@@ -109,11 +120,9 @@ PreferredSize appBarWidget(BuildContext context,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black
-                                        .withOpacity(0.2), // Shadow color
-                                    blurRadius: 2, // How blurry the shadow is
-                                    offset: Offset(0,
-                                        2), // Horizontal and vertical displacement
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 2,
+                                    offset: Offset(0, 2),
                                   ),
                                 ],
                               ),
@@ -138,11 +147,9 @@ PreferredSize appBarWidget(BuildContext context,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black
-                                        .withOpacity(0.2), // Shadow color
-                                    blurRadius: 2, // How blurry the shadow is
-                                    offset: Offset(0,
-                                        2), // Horizontal and vertical displacement
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 2,
+                                    offset: Offset(0, 2),
                                   ),
                                 ],
                               ),

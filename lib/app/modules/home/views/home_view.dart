@@ -14,6 +14,7 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
+    // Set the app bar title when this page is built
     final navcontroller = Get.find<NavController>();
     return Scaffold(
         appBar: appBarWidget(context),
