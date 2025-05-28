@@ -4,6 +4,11 @@ import 'package:braincount/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:camera/camera.dart';
+import 'package:braincount/app/modules/home/controllers/home_controller.dart';
+import 'package:braincount/app/modules/tasklist/controllers/tasklist_controller.dart';
+import 'package:braincount/app/modules/withdraw/controllers/withdraw_controller.dart';
+import 'package:braincount/app/modules/notifications/controllers/notifications_controller.dart';
+import 'package:braincount/app/modules/profile/controllers/profile_controller.dart';
 
 class NavController extends GetxController {
   final RxInt selectedIndex = 0.obs;
@@ -17,9 +22,57 @@ class NavController extends GetxController {
 
   RxDouble btnScale = 1.0.obs;
 
+  late final HomeController homeController;
+  late final TasklistController tasklistController;
+  late final WithdrawController withdrawController;
+  late final NotificationsController notificationsController;
+  late final ProfileController profileController;
+
   @override
   void onInit() {
     super.onInit();
+
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    homeController = Get.find<HomeController>();
+    tasklistController = Get.find<TasklistController>();
+    withdrawController = Get.find<WithdrawController>();
+    notificationsController = Get.find<NotificationsController>();
+    profileController = Get.find<ProfileController>();
+  }
+
+  void changeIndex(int index) {
+    if (selectedIndex.value == index) {
+      // If same tab is selected, refresh the data
+      refreshCurrentTab();
+      return;
+    }
+    selectedIndex.value = index;
+    refreshCurrentTab();
+  }
+
+  void refreshCurrentTab() {
+    // Call appropriate API based on selected tab
+    switch (selectedIndex.value) {
+      case 0:
+        homeController.tasks();
+        break;
+      case 1:
+        tasklistController.tasks();
+        break;
+      case 2:
+        withdrawController.getWithdrawals();
+        break;
+      case 3:
+        notificationsController.getNotifications();
+        break;
+      case 4:
+        profileController.getProfile();
+        break;
+    }
   }
 
   void changeCameraReady() {
@@ -208,10 +261,5 @@ class NavController extends GetxController {
 
   void disableCamera() {
     cameraenable.value = false;
-  }
-
-  void changeIndex(int index) {
-    if (selectedIndex.value == index) return; // Don't navigate if already on the page
-    selectedIndex.value = index;
   }
 }
