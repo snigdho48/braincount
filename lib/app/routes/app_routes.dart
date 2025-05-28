@@ -26,6 +26,6 @@ abstract class _Paths {
 
   static const SUBMISSIONLIST = '/submissionList';
   static const DATACOLLECT = '/dataCollect';
-  static const WITHDRAW = '/withdraw';
+  static const WITHDRAW = '/balanceHistory';
   static const SUBMISSION_DETAILS = '/submissionDetails';
 }

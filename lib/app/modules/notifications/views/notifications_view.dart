@@ -1,8 +1,6 @@
 import 'package:braincount/app/modules/custom/appbar.dart';
-import 'package:braincount/app/modules/custom/bottomnav.dart';
 import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/notifications_controller.dart';
@@ -13,7 +11,6 @@ class NotificationsView extends GetView<NotificationsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(context),
-      bottomNavigationBar: CustomBottomNavigationBar(),
       body: backgroundColorLinear(
         child: SizedBox(
             height: Get.height,

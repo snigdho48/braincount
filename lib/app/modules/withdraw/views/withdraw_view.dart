@@ -1,8 +1,6 @@
 import 'package:braincount/app/modules/custom/appbar.dart';
-import 'package:braincount/app/modules/custom/bottomnav.dart';
 import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/withdraw_controller.dart';
@@ -13,7 +11,6 @@ class WithdrawView extends GetView<WithdrawController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(context),
-      bottomNavigationBar: CustomBottomNavigationBar(),
       body: backgroundColorLinear(
         child: SizedBox(
             height: Get.height,
@@ -26,10 +23,11 @@ class WithdrawView extends GetView<WithdrawController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: Get.height * .015,
+                spacing: Get.height * .04,
                 children: [
-                  SizedBox(
-                    height: Get.height * .03,
+                  Text(
+                    'Withdraw',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),

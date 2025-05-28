@@ -46,7 +46,7 @@ class BillboardDetail {
       longitude: (data['longitude'] as num?)?.toDouble(),
       status: data['status'] as String?,
       title: data['title'] as String?,
-      location: data['location'] as String?,
+      location: data['location']['location'] as String?,
       front: data['front'] as String?,
       left: data['left'] as String?,
       right: data['right'] as String?,

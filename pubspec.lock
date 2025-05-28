@@ -692,10 +692,10 @@ packages:
     dependency: "direct main"
     description:
       name: one_request
-      sha256: f40ce29986ca76a792046becf2b94a5e615abbac238fd9f43f73f7e05768fed4
+      sha256: d2cba432317bea83d06fb00774982ade29b082fbc1f692a4d74cdfad517089d7
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5"
   package_config:
     dependency: transitive
     description:

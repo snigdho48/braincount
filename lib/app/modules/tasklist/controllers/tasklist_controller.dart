@@ -1,3 +1,4 @@
+import 'package:braincount/app/modules/custom/map.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -39,6 +40,7 @@ class TasklistController extends GetxController {
     result.fold((response) {
       pendingtask.clear();
       pendingtask.value = response;
+      print(pendingtask.value);
     }, (error) {
       Get.snackbar('Error', 'Something went wrong',
           snackPosition: SnackPosition.TOP,
@@ -78,22 +80,61 @@ class TasklistController extends GetxController {
   }
 
   void opendialog({String? uuid}) {
+    final task =
+        pendingtask['monitoring'].firstWhere((task) => task['uuid'] == uuid);
     Get.defaultDialog(
       title: 'Task Acceptance',
       titlePadding: EdgeInsets.only(top: Get.height * .02),
       content: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(
-              left: Get.width * .05,
-              right: Get.width * .05,
-              top: Get.height * .01,
-            ),
-            child: const Text(
-              'Are you sure you want to accept this task?',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
+              padding: EdgeInsets.only(
+                left: Get.width * .05,
+                right: Get.width * .05,
+                top: Get.height * .01,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    task['billboard_detail']['title'] ?? 'Untitled',
+                    style: TextStyle(
+                        fontSize: 16, textBaseline: TextBaseline.alphabetic),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    task['billboard_detail']['location'] ?? 'Untitled',
+                    style: TextStyle(
+                        fontSize: 16, textBaseline: TextBaseline.alphabetic),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: Get.height * .0125,
+                  ),
+                  SizedBox(
+                    width: Get.width * .8,
+                    height: Get.height * .3,
+                    child: openStreetMap(
+                      coordinates: [
+                        {
+                          'lat': task['billboard_detail']['latitude'],
+                          'lon': task['billboard_detail']['longitude']
+                        }
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: Get.height * .02,
+                  ),
+                  const Text(
+                    'This task will be assigned to you and you will be responsible for its completion.',
+                    style: TextStyle(
+                        fontSize: 14, textBaseline: TextBaseline.alphabetic),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              )),
           Padding(
             padding: EdgeInsets.only(top: Get.height * .02),
             child: Row(

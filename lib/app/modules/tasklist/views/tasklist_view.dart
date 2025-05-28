@@ -1,5 +1,4 @@
 import 'package:braincount/app/modules/custom/appbar.dart';
-import 'package:braincount/app/modules/custom/bottomnav.dart';
 import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:braincount/app/modules/custom/dashboardtasklistCard.dart';
 import 'package:braincount/app/routes/app_pages.dart';
@@ -14,7 +13,6 @@ class TasklistView extends GetView<TasklistController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(context),
-      bottomNavigationBar: CustomBottomNavigationBar(),
       body: backgroundColorLinear(
         child: SizedBox(
             height: Get.height,
@@ -23,7 +21,7 @@ class TasklistView extends GetView<TasklistController> {
               children: [
                 SingleChildScrollView(
                   padding: EdgeInsets.only(
-                      top: Get.height * .09,
+                      top: Get.height * .11,
                       left: context.width * .05,
                       right: context.width * .05),
                   child: Column(

@@ -211,17 +211,7 @@ class NavController extends GetxController {
   }
 
   void changeIndex(int index) {
+    if (selectedIndex.value == index) return; // Don't navigate if already on the page
     selectedIndex.value = index;
-    if (index == 0) {
-      Get.offAllNamed(Routes.HOME);
-    } else if (index == 1) {
-      Get.offAllNamed(Routes.TASKLIST);
-    } else if (index == 2) {
-      Get.offAllNamed(Routes.WITHDRAW);
-    } else if (index == 3) {
-      Get.offAllNamed(Routes.NOTIFICATIONS);
-    } else if (index == 4) {
-      Get.offAllNamed(Routes.PROFILE);
-    }
   }
 }

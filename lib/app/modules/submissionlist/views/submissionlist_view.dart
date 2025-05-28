@@ -21,7 +21,7 @@ class SubmissionlistView extends GetView<SubmissionListController> {
                  
                   SingleChildScrollView(
                     padding: EdgeInsets.only(
-                        top: Get.height * .09,
+                        top: Get.height * .11,
                         left: context.width * .05,
                         right: context.width * .05),
                     child: Column(

@@ -1,5 +1,4 @@
 import 'package:braincount/app/modules/custom/appbar.dart';
-import 'package:braincount/app/modules/custom/bottomnav.dart';
 import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:braincount/app/modules/custom/dashboardcard.dart';
 import 'package:braincount/app/modules/custom/dashboardtasklistCard.dart';
@@ -15,10 +14,9 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
-    final navcontroller = Get.put(NavController());
+    final navcontroller = Get.find<NavController>();
     return Scaffold(
         appBar: appBarWidget(context),
-        bottomNavigationBar: CustomBottomNavigationBar(),
         body: backgroundColorLinear(
           child: SizedBox(
             height: Get.height,
@@ -91,9 +89,9 @@ class HomeView extends GetView<HomeController> {
                           spacing: 10,
                           children: [
                             dashboardbtn(
-                              text: 'Widthdraw',
+                              text: 'Balance History',
                               onPressed: () {
-                                navcontroller.changeIndex(3);
+                                navcontroller.changeIndex(2);
                               },
                             ),
                             dashboardbtn(
@@ -120,46 +118,6 @@ class HomeView extends GetView<HomeController> {
                           navcontroller.changeIndex(1);
                         },
                       ),
-                      // Stack(
-                      //   children: [
-                      //     dashboardCard(
-                      //       text: 'Pending List',
-                      //       image: 'assets/icon/list.png',
-                      //       onPressed: () {
-                      //         Get.toNamed(Routes.PENDINGLIST);
-                      //       },
-                      //     ),
-                      //     Positioned(
-                      //       right: 0,
-                      //       top: 0,
-                      //       child: Container(
-                      //         width: 24,
-                      //         height: 24,
-                      //         decoration: BoxDecoration(
-                      //           color: Colors.red,
-                      //           shape: BoxShape.circle,
-                      //         ),
-                      //         child: Obx(() {
-                      //           return Center(
-                      //             child: Text(
-                      //               controller.pendingtask['pending'] != null &&
-                      //                       controller.pendingtask['pending'] >
-                      //                           0
-                      //                   ? controller.pendingtask['pending']
-                      //                       .toString()
-                      //                   : '0',
-                      //               style: TextStyle(
-                      //                 fontSize: Get.width * .03,
-                      //                 fontWeight: FontWeight.w300,
-                      //                 color: Colors.white,
-                      //               ),
-                      //             ),
-                      //           );
-                      //         }),
-                      //       ),
-                      //     )
-                      //   ],
-                      // ),
                       dashboardCard(
                         text: 'Submission List',
                         image: 'assets/icon/list.png',

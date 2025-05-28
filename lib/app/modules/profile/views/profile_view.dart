@@ -1,8 +1,6 @@
 import 'package:braincount/app/modules/custom/appbar.dart';
-import 'package:braincount/app/modules/custom/bottomnav.dart';
 import 'package:braincount/app/modules/custom/custombg.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/profile_controller.dart';
@@ -13,7 +11,6 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(context),
-      bottomNavigationBar: CustomBottomNavigationBar(),
       body: backgroundColorLinear(
         child: SizedBox(
             height: Get.height,
@@ -43,8 +40,6 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                     ),
                   ),
-
-                  // Name
                   Text(
                     'Md. Atiquzzaman Snigdho',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
