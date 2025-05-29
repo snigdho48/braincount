@@ -15,6 +15,8 @@ class BillboardDetail {
   String? billboardType;
   DateTime? createdAt;
   DateTime? updatedAt;
+  final List<num>? views;
+
 
   BillboardDetail({
     this.id,
@@ -31,6 +33,7 @@ class BillboardDetail {
     this.billboardType,
     this.createdAt,
     this.updatedAt,
+    this.views,
   });
 
   @override
@@ -58,6 +61,11 @@ class BillboardDetail {
       updatedAt: data['updated_at'] == null
           ? null
           : DateTime.parse(data['updated_at'] as String),
+      views: data['views'] == null
+          ? null
+          : (data['views'] as List)
+              .map((e) => e is Map ? e['id'] as num : e as num)
+              .toList(),
     );
   }
 
@@ -76,6 +84,7 @@ class BillboardDetail {
         'billboard_type': billboardType,
         'created_at': createdAt?.toIso8601String(),
         'updated_at': updatedAt?.toIso8601String(),
+        'views': views,
       };
 
   /// `dart:convert`

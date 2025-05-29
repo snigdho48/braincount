@@ -49,7 +49,7 @@ class TasklistView extends GetView<TasklistController> {
                           spacing: 10,
                           children: monitoring
                               .map<Widget>((task) => tasklistCardDashboard(
-                                    text: task['billboard_detail']?['title'] ??
+                                    text: task['billboard_detail']?['title'] + controller.getTaskView(task) ??
                                         'Untitled',
                                     status: task['is_accepeted'] ?? 'UNKNOWN',
                                     onPressed: () =>

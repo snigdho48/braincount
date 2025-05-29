@@ -34,11 +34,13 @@ class HomeView extends GetView<HomeController> {
                         alignment: Alignment.center,
                         width: Get.width / 2,
                         child: Container(
-                          width: Get.width * .3,
+                          margin: EdgeInsets.only(left: Get.width * .02),
+                          width: Get.width * .39,
                           height: Get.width * .3,
-                          padding: EdgeInsets.only(top: Get.width * .02),
+                          padding: EdgeInsets.only(left: Get.width * .03),
                           decoration: BoxDecoration(
-                            shape: BoxShape.circle,
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.2),
@@ -59,25 +61,41 @@ class HomeView extends GetView<HomeController> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: Get.height * .007,
+                            
                             children: [
                               Text(
-                                '5000',
+                                'Task Summary',
                                 style: TextStyle(
-                                  fontSize: Get.width * .09,
+                                  fontSize: Get.width * .035,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black87,
                                 ),
                               ),
-                              Transform.translate(
-                                offset: Offset(0, -Get.width * .02),
-                                child: Text(
-                                  'TK',
-                                  style: TextStyle(
-                                    fontSize: Get.width * .07,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                  ),
+                              Text(
+                                'Completed: ${controller.withdraws['completed_tasks'] ?? 0}',
+                                style: TextStyle(
+                                  fontSize: Get.width * .035,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black87,
                                 ),
+                              ),
+                              Text(
+                                'Pending: ${controller.withdraws['pending_tasks'] ?? 0}',
+                                style: TextStyle(
+                                  fontSize: Get.width * .035,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              Text(
+                                'Rejected: ${controller.withdraws['rejected_tasks'] ?? 0}',
+                                style: TextStyle(
+                                  fontSize: Get.width * .035,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black87,
+                              ),
                               ),
                             ],
                           ),
@@ -132,7 +150,7 @@ class HomeView extends GetView<HomeController> {
                 Padding(
                   padding: EdgeInsets.only(top: Get.height * .04),
                   child: Text(
-                    'Task List',
+                    'Pending Task List',
                     style: TextStyle(
                       fontSize: Get.width * .06,
                       fontWeight: FontWeight.w300,
@@ -166,8 +184,7 @@ class HomeView extends GetView<HomeController> {
                           spacing: 10,
                           children: monitoring
                               .map<Widget>((task) => tasklistCardDashboard(
-                                    text: task['billboard_detail']?['title'] ??
-                                        'Untitled',
+                                    text: task['billboard_detail']?['title'] + controller.getTaskView(task) ?? 'Untitled',
                                     status: task['is_accepeted'] ?? 'UNKNOWN',
                                     onPressed: () => controller.opendialog(
                                         uuid: task['uuid']),

@@ -37,9 +37,7 @@ class DatacollectView extends GetView<DatacollectController> {
                         () => Container(
                           alignment: Alignment.center,
                           child: Text(
-                            controller.updatedmodel.value?.billboardDetail
-                                    ?.title ??
-                                '',
+                            controller.updatedmodel.value?.billboardDetail?.title ?? '',
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,

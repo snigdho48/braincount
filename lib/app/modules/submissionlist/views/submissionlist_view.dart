@@ -43,7 +43,7 @@ class SubmissionlistView extends GetView<SubmissionListController> {
                             spacing: 10,
                             children: data
                                 .map<Widget>((task) => tasklistCardDashboard(
-                                    text: task.billboardDetail?.title ?? 'Untitled',
+                                    text: '${task.billboardDetail?.title}  ${controller.getTaskView(task)}' ?? 'Untitled',
                                     status: task.approvalStatus ?? 'UNKNOWN',
                                     onPressed: () => Get.toNamed(
                                         Routes.SUBMISSION_DETAILS,
@@ -54,6 +54,7 @@ class SubmissionlistView extends GetView<SubmissionListController> {
                         SizedBox(
                           height: Get.height * .03,
                         ),
+              
                       ],
                     ),
                   ),

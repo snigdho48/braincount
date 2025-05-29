@@ -8,6 +8,7 @@ class WithdrawController extends GetxController {
   final request = oneRequest();
   final storage = GetStorage();
   final withdrawals = [].obs;
+  final withdraws = {}.obs;
 
   @override
   void onInit() {
@@ -17,17 +18,27 @@ class WithdrawController extends GetxController {
 
   void getWithdrawals() async {
     final result = await request.send(
-        url: '${baseUrl}withdraw/',
-        method: RequestType.GET,
-        header: {
-          'Authorization': 'Bearer ${storage.read('token')}',
-          'Accept': 'application/json',
-        },
-        resultOverlay: false);
+      url: '${baseUrl}withdraw/',
+      method: RequestType.GET,
+      resultOverlay: false,
+      header: {
+        'Authorization': 'Bearer ${storage.read('token')}',
+      },
+    );
     result.fold((response) {
+      print('Withdrawals: $response');
+      withdraws.clear();
       withdrawals.clear();
-      withdrawals.addAll(response['results'] ?? []);
-      print('Withdrawals: $withdrawals');
+      withdrawals.addAll(response['withdrawals'] ?? []);
+      withdraws.value = {
+        'completed_tasks': response['completed_tasks'],
+        'pending_tasks': response['pending_tasks'],
+        'rejected_tasks': response['rejected_tasks'],
+        'total_pending_amount': response['total_pending_amount'],
+        'total_amount': response['total_amount'],
+        'total_withdrawable_amount': response['total_withdrawable_amount'],
+
+      };
     }, (error) {
       Get.snackbar('Error', 'Something went wrong',
           snackPosition: SnackPosition.TOP,

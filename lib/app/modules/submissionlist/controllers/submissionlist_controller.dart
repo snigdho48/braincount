@@ -35,6 +35,15 @@ class SubmissionListController extends GetxController {
     super.onClose();
   }
 
+    String getTaskView(Submission task) {
+    final views = task.billboardDetail?.views;
+
+  
+    final viewIndex = views?.indexWhere((view) => view == task.view);
+
+    return '\nview: ${viewIndex! + 1}';
+  }
+
   void tasks() async {
    final queryParams =
         selectedStatus.value != 'ALL' ? {'approval_statuss': selectedStatus.value} : null;
@@ -49,6 +58,7 @@ class SubmissionListController extends GetxController {
       queryParameters: queryParams,
     );
     result.fold((response) {
+    
       pendingtask.clear();
       pendingtask.value = List<Submission>.from(
           response.map((x) => Submission.fromMap(x)).toList());

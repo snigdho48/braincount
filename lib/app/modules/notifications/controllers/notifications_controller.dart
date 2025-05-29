@@ -3,38 +3,64 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:one_request/one_request.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class NotificationsController extends GetxController {
   final request = oneRequest();
   final storage = GetStorage();
   final notifications = [].obs;
+  late WebSocketChannel channel;
+  var messages = <String>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     getNotifications();
+
+    
   }
 
   void getNotifications() async {
-    final result = await request.send(
-        url: '${baseUrl}notifications/',
-        method: RequestType.GET,
-        header: {
-          'Authorization': 'Bearer ${storage.read('token')}',
-          'Accept': 'application/json',
+   final token = storage.read('token');
+   return;
+
+    try {
+      channel = WebSocketChannel.connect(
+        Uri.parse('${wsUrl}notifications/?token=$token'),
+      );
+      channel.stream.listen(
+        (message) {
+          messages.add(message);
         },
-        resultOverlay: false);
-    result.fold((response) {
-      notifications.clear();
-      notifications.addAll(response['results'] ?? []);
-      print('Notifications: $notifications');
-    }, (error) {
-      Get.snackbar('Error', 'Something went wrong',
-          snackPosition: SnackPosition.TOP,
-          isDismissible: true,
-          icon: const Icon(Icons.error, color: Colors.red),
-          duration: const Duration(seconds: 3));
-    });
+        onError: (error) {
+          print('WebSocket error: $error');
+          Future.microtask(() {
+            Get.snackbar(
+              'WebSocket Error',
+              error.toString(),
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+            );
+          });
+        },
+        onDone: () {
+          print('WebSocket closed');
+        },
+        cancelOnError: true, // This will close the stream on error
+      );
+    } catch (e) {
+      print('Error connecting to WebSocket: $e');
+      Future.microtask(() {
+        Get.snackbar(
+          'WebSocket Connect Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
+    }
   }
 
   @override
@@ -44,6 +70,7 @@ class NotificationsController extends GetxController {
 
   @override
   void onClose() {
+    channel.sink.close();
     super.onClose();
   }
 }

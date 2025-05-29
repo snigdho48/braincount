@@ -13,10 +13,12 @@ class HomeController extends GetxController {
   final request = oneRequest();
   final storage = GetStorage();
   final pendingtask = {}.obs;
+  final withdraws = {}.obs;
   @override
   void onInit() {
     super.onInit();
     tasks();
+    withdraw();
   }
 
   @override
@@ -27,6 +29,33 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+  void withdraw() async {
+    final result = await request.send(
+        url: '${baseUrl}withdraw/',
+        method: RequestType.GET,
+        resultOverlay: false,
+        header: {
+          'Authorization': 'Bearer ${storage.read('token')}',
+        },
+      );
+      result.fold((response) {
+        withdraws.clear();
+        withdraws.value = {
+        'completed_tasks': response['completed_tasks'],
+        'pending_tasks': response['pending_tasks'],
+        'rejected_tasks': response['rejected_tasks'],
+        'total_pending_amount': response['total_pending_amount'],
+        'total_amount': response['total_amount'],
+        'total_withdrawable_amount': response['total_withdrawable_amount'],
+      };
+      }, (error) {
+        Get.snackbar('Error', 'Something went wrong',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.error, color: Colors.red),
+          duration: const Duration(seconds: 3));
+      });
   }
 
   void tasks() async {
@@ -82,6 +111,11 @@ class HomeController extends GetxController {
           icon: const Icon(Icons.error, color: Colors.red),
           duration: const Duration(seconds: 3));
     });
+  }
+  String getTaskView( task) {
+    final views = task['billboard_detail']['views'];
+    final viewIndex = views.indexWhere((view) => view['id'] == task['view']);
+    return '\nview: ${viewIndex + 1}';
   }
 
   void opendialog({String? uuid}) {

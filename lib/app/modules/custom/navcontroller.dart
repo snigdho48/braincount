@@ -38,6 +38,7 @@ class NavController extends GetxController with RouteAware {
   late final WithdrawController withdrawController;
   late final NotificationsController notificationsController;
   late final ProfileController profileController;
+  final isFirstTime = true.obs;
 
   @override
   void onInit() {
@@ -47,11 +48,7 @@ class NavController extends GetxController with RouteAware {
   @override
   void onReady() {
     super.onReady();
-    homeController = Get.find<HomeController>();
-    tasklistController = Get.find<TasklistController>();
-    withdrawController = Get.find<WithdrawController>();
-    notificationsController = Get.find<NotificationsController>();
-    profileController = Get.find<ProfileController>();
+   
   }
 
   void changeIndex(int index) {
@@ -128,12 +125,21 @@ class NavController extends GetxController with RouteAware {
 
   void refreshCurrentTab() {
     // Call appropriate API based on selected tab
+     if(isFirstTime.value){
+      homeController = Get.find<HomeController>();
+    tasklistController = Get.find<TasklistController>();
+    withdrawController = Get.find<WithdrawController>();
+    notificationsController = Get.find<NotificationsController>();
+    profileController = Get.find<ProfileController>();
+    isFirstTime.value = false;
+     }
     switch (selectedIndex.value) {
       case 0:
         homeController.tasks();
         break;
       case 1:
         tasklistController.tasks();
+        homeController.withdraw();
         break;
       case 2:
         withdrawController.getWithdrawals();

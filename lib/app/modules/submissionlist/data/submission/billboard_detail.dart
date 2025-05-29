@@ -7,9 +7,9 @@ class BillboardDetail {
   final double? longitude;
   final String? title;
   final String? location;
-
   final String? billboardType;
   final dynamic faces;
+
 
   const BillboardDetail({
     this.id,

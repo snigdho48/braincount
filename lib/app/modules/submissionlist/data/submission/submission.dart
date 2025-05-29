@@ -16,7 +16,7 @@ class Submission {
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final BillboardDetail? billboardDetail;
-
+  final int? view;
   final List<dynamic>? extraImagesList;
   final String? approvalStatus;
   final String? rejectReason;
@@ -30,6 +30,7 @@ class Submission {
     this.front,
     this.left,
     this.right,
+    this.view,
     this.close,
     this.comment,
     this.createdAt,
@@ -65,6 +66,7 @@ class Submission {
         extraImagesList: data['extra_images_list'] as List<dynamic>?,
         approvalStatus: data['approval_status'] as String?,
         rejectReason: data['reject_reason'] as String?,
+        view: data['view'] as int?,
         billboardDetail: data['billboard_detail'] == null
             ? null
             : BillboardDetail.fromMap(
@@ -88,6 +90,7 @@ class Submission {
         'approval_status': approvalStatus,
         'reject_reason': rejectReason,
         'billboard_detail': billboardDetail?.toMap(),
+        'view': view,
       };
 
   /// `dart:convert`

@@ -50,6 +50,16 @@ class TasklistController extends GetxController {
     });
   }
 
+  String getTaskView(task)  {
+    final views = task['billboard_detail']['views'];
+
+      // get view index
+      final viewIndex = views.indexWhere((view) => view['id'] == task['view']);
+
+    return '\nview: ${viewIndex + 1}';
+  }
+
+
   void accepetTask({String? uuid, String? status}) async {
     final result = await request.send(
         url: '${baseUrl}monitoring_request/',
@@ -99,12 +109,6 @@ class TasklistController extends GetxController {
                 children: [
                   Text(
                     task['billboard_detail']['title'] ?? 'Untitled',
-                    style: TextStyle(
-                        fontSize: 16, textBaseline: TextBaseline.alphabetic),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    task['billboard_detail']['location'] ?? 'Untitled',
                     style: TextStyle(
                         fontSize: 16, textBaseline: TextBaseline.alphabetic),
                     textAlign: TextAlign.center,

@@ -16,6 +16,7 @@ class ProfileController extends GetxController {
   }
 
   void getProfile() async {
+    return;
     final result = await request.send(
         url: '${baseUrl}profile/',
         method: RequestType.GET,
