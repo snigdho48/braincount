@@ -22,11 +22,11 @@ class NotificationsController extends GetxController {
 
   void getNotifications() async {
    final token = storage.read('token');
-   return;
+
 
     try {
       channel = WebSocketChannel.connect(
-        Uri.parse('${wsUrl}notifications/?token=$token'),
+        Uri.parse('wss://${url}/ws/notifications/?token=$token'),
       );
       channel.stream.listen(
         (message) {

@@ -26,7 +26,6 @@ class WithdrawController extends GetxController {
       },
     );
     result.fold((response) {
-      print('Withdrawals: $response');
       withdraws.clear();
       withdrawals.clear();
       withdrawals.addAll(response['withdrawals'] ?? []);

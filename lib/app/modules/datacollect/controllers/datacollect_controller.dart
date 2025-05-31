@@ -76,7 +76,6 @@ class DatacollectController extends NavController {
     );
     result.fold((response) {
       statusList.clear();
-      print(response);
       statusList.value = response['status'];
       selectedStatus.value = [statusList[0]];
     }, (error) {
@@ -105,14 +104,7 @@ class DatacollectController extends NavController {
           duration: const Duration(seconds: 3));
       return;
     }
-    print(navcontroller.imageList
-        .where((e) =>
-            e['type'] != 'left' &&
-            e['type'] != 'front' &&
-            e['type'] != 'close' &&
-            e['type'] != 'right')
-        .toList()
-        .map((e) => e['file']));
+ 
     final result = await request.send(
       url: '${baseUrl}monitoring/',
       method: RequestType.PATCH,
@@ -193,7 +185,6 @@ class DatacollectController extends NavController {
     );
     result.fold((response) {
       model.value = [];
-      print(response);
       model.value = (response as List)
           .map((e) => MonitoringModel.fromJson(jsonEncode(e)))
           .toList();
@@ -205,7 +196,6 @@ class DatacollectController extends NavController {
           e.front == null &&
           e.close == null);
       if (updatedmodel.value == null) {
-        print(model.value);
         Get.back();
 
         Get.snackbar('Error', 'Data Already Updated',

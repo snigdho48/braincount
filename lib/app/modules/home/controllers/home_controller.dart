@@ -74,7 +74,6 @@ class HomeController extends GetxController {
     result.fold((response) {
       pendingtask.clear();
       pendingtask.value = response;
-      print('Pending Task: $pendingtask');
     }, (error) {
       Get.snackbar('Error', 'Something went wrong',
           snackPosition: SnackPosition.TOP,

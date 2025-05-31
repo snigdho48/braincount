@@ -40,7 +40,6 @@ class TasklistController extends GetxController {
     result.fold((response) {
       pendingtask.clear();
       pendingtask.value = response;
-      print(pendingtask.value);
     }, (error) {
       Get.snackbar('Error', 'Something went wrong',
           snackPosition: SnackPosition.TOP,

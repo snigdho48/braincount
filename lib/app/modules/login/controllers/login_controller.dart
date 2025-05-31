@@ -79,7 +79,6 @@ class LoginController extends GetxController {
             isDismissible: true,
             icon: const Icon(Icons.check, color: Colors.green),
             duration: const Duration(seconds: 3));
-        print(res);
         storage.write('token', res['access_token']);
         storage.write('group', res['groups']);
         storage.write('username', res['username']);

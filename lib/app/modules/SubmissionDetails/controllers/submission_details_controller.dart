@@ -356,9 +356,7 @@ class SubmissionDetailsController extends GetxController {
     );
     result.fold((response) {
       statusList.clear();
-      print(response);
       statusList.value = response['status'];
-      print(submissionData.value.status ?? []);
       if (submissionData.value.status != null || submissionData.value.status!.isNotEmpty) {
         selectedStatus.value = submissionData.value.status ?? [];
         

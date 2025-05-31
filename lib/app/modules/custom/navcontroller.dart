@@ -178,7 +178,6 @@ class NavController extends GetxController with RouteAware {
   }
 
   void opencamera({required String type}) async {
-    print('imageList: $imageList');
     await initializeCamera();
     if (Get.currentRoute == "/dataCollect" ||
         Get.currentRoute == "/submissionDetails") {
