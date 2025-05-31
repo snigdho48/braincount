@@ -58,46 +58,48 @@ class HomeView extends GetView<HomeController> {
                               ],
                             ),
                           ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: Get.height * .007,
-                            
-                            children: [
-                              Text(
-                                'Task Summary',
-                                style: TextStyle(
-                                  fontSize: Get.width * .035,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
+                          child: Obx(
+                            ()=> Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: Get.height * .007,
+                              
+                              children: [
+                                Text(
+                                  'Task Summary',
+                                  style: TextStyle(
+                                    fontSize: Get.width * .035,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                'Completed: ${controller.withdraws['completed_tasks'] ?? 0}',
-                                style: TextStyle(
-                                  fontSize: Get.width * .035,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black87,
+                                Text(
+                                  'Completed: ${controller.withdraws['completed_tasks'] ?? 0}',
+                                  style: TextStyle(
+                                    fontSize: Get.width * .035,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black87,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                'Pending: ${controller.withdraws['pending_tasks'] ?? 0}',
-                                style: TextStyle(
-                                  fontSize: Get.width * .035,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black87,
+                                Text(
+                                  'Pending: ${controller.withdraws['pending_tasks'] ?? 0}',
+                                  style: TextStyle(
+                                    fontSize: Get.width * .035,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black87,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                'Rejected: ${controller.withdraws['rejected_tasks'] ?? 0}',
-                                style: TextStyle(
-                                  fontSize: Get.width * .035,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black87,
-                              ),
-                              ),
-                            ],
+                                Text(
+                                  'Rejected: ${controller.withdraws['rejected_tasks'] ?? 0}',
+                                  style: TextStyle(
+                                    fontSize: Get.width * .035,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black87,
+                                ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

@@ -135,20 +135,20 @@ class NavController extends GetxController with RouteAware {
      }
     switch (selectedIndex.value) {
       case 0:
-        homeController.tasks();
+        homeController.onInit();
         break;
       case 1:
         tasklistController.tasks();
-        homeController.withdraw();
+        homeController.onInit();
         break;
       case 2:
-        withdrawController.getWithdrawals();
+        withdrawController.onInit();
         break;
       case 3:
-        notificationsController.getNotifications();
+        notificationsController.onInit();
         break;
       case 4:
-        profileController.getProfile();
+        profileController.onInit();
         break;
     }
   }

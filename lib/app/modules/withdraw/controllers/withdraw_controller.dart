@@ -37,6 +37,7 @@ class WithdrawController extends GetxController {
         'total_pending_amount': response['total_pending_amount'],
         'total_amount': response['total_amount'],
         'total_withdrawable_amount': response['total_withdrawable_amount'],
+        'withdrwal_amount_per_task': response['withdrwal_amount_per_task'],
 
       };
     }, (error) {
