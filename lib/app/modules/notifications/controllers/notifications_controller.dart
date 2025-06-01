@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:one_request/one_request.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'dart:convert';
 
 class NotificationsController extends GetxController {
   final request = oneRequest();
@@ -11,13 +12,13 @@ class NotificationsController extends GetxController {
   final notifications = [].obs;
   late WebSocketChannel channel;
   var messages = <String>[].obs;
+  var unreadCount = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
+    messages.listen((_) => updateUnreadCount());
     getNotifications();
-
-    
   }
 
   void getNotifications() async {
@@ -26,11 +27,21 @@ class NotificationsController extends GetxController {
 
     try {
       channel = WebSocketChannel.connect(
-        Uri.parse('wss://${url}/ws/notifications/?token=$token'),
+        Uri.parse('wss://$url/ws/notifications/?token=$token'),
       );
       channel.stream.listen(
         (message) {
-          messages.add(message);
+          print('message: $message');
+          if (message is Map && message['type'] == 'all_notifications') {
+            // This is the full list of previous notifications
+            messages.clear();
+            for (var notif in message['notifications']) {
+              messages.add(notif);
+            }
+          } else if (message is Map) {
+            // This is a real-time notification
+            messages.insert(0, jsonEncode(message));
+          }
         },
         onError: (error) {
           print('WebSocket error: $error');
@@ -61,6 +72,43 @@ class NotificationsController extends GetxController {
         );
       });
     }
+  }
+
+void updateUnreadCount() {
+    int count = 0;
+    for (var msg in messages) {
+      try {
+        final data = msg is String ? jsonDecode(msg) : msg;
+        if (data is Map && data['is_read'] == false) {
+          count++;
+        }
+      } catch (_) {}
+    }
+    unreadCount.value = count;
+  }
+
+  void markAllAsRead() {
+    for (int i = 0; i < messages.length; i++) {
+      try {
+        var data = jsonDecode(messages[i]);
+        if (data is Map && data['is_read'] == false) {
+          data['is_read'] = true;
+          messages[i] = jsonEncode(data);
+        }
+      } catch (_) {}
+    }
+    updateUnreadCount();
+  }
+
+  void markAsRead(int index) {
+    try {
+      var data = jsonDecode(messages[index]);
+      if (data is Map && data['is_read'] == false) {
+        data['is_read'] = true;
+        messages[index] = jsonEncode(data);
+        updateUnreadCount();
+      }
+    } catch (_) {}
   }
 
   @override

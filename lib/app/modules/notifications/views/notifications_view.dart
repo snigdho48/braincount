@@ -103,6 +103,7 @@ class NotificationsView extends GetView<NotificationsController> {
                           ),
                       ],
                     ),
+                    onTap: () => controller.markAsRead(index),
                   ),
                 );
               },
