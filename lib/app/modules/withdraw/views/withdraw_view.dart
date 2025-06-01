@@ -23,7 +23,7 @@ class WithdrawView extends GetView<WithdrawController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: Get.height * .04,
+                spacing: Get.height * .01,
                 children: [
                  
               
@@ -32,47 +32,62 @@ class WithdrawView extends GetView<WithdrawController> {
                     if (summary.isEmpty) {
                       return Center(child: CircularProgressIndicator());
                     }
-                    return SizedBox(
-                      width: Get.width,
-                      child: DataTable(
-                        columns: const [
-                          DataColumn(label: Text('', style: TextStyle(fontWeight: FontWeight.bold))),
-                          DataColumn(label: Text('', style: TextStyle(fontWeight: FontWeight.bold))),
-                        ],
-                        rows: [
-                          DataRow(cells: [
-                            DataCell(Text('Completed Tasks:')),
-                            DataCell(Text('${summary['completed_tasks'] ?? '0'}')),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(Text('Pending Tasks:')),
-                            DataCell(Text('${summary['pending_tasks'] ?? '0'}')),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(Text('Rejected Tasks:')),
-                            DataCell(Text('${summary['rejected_tasks'] ?? '0'}')),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(Text('Total Pending Amount:')),
-                            DataCell(Text('${summary['total_pending_amount'] ?? '0'}')),
-                          ]),
-                         
-                          DataRow(cells: [
-                            DataCell(Text('Total Amount:')),
-                            DataCell(Text('${summary['total_amount'] ?? '0'}',)),
-                          ]),
-                           DataRow(cells: [
-                            DataCell(Text('Total Withdrawable Amount:',
-                                style: TextStyle(fontWeight: FontWeight.bold))),
-                            DataCell(Text(
-                                '${summary['total_withdrawable_amount'] ?? '0'}',
-                                style: TextStyle(fontWeight: FontWeight.bold))),
-                          ]),
-
-                        ],
+                    return Transform.translate(
+                      offset: Offset(0, -Get.height * .05),
+                      child: SizedBox(
+                        
+                        width: Get.width,
+                        child: DataTable(
+                          columns: const [
+                            DataColumn(label: Text('', style: TextStyle(fontWeight: FontWeight.bold))),
+                            DataColumn(label: Text('', style: TextStyle(fontWeight: FontWeight.bold))),
+                          ],
+                          rows: [
+                            DataRow(cells: [
+                              DataCell(Text('Completed Tasks:')),
+                              DataCell(Text('${summary['completed_tasks'] ?? '0'}')),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text('Pending Tasks:')),
+                              DataCell(Text('${summary['pending_tasks'] ?? '0'}')),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text('Rejected Tasks:')),
+                              DataCell(Text('${summary['rejected_tasks'] ?? '0'}')),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text('Total Pending Amount:')),
+                              DataCell(Text('${summary['total_pending_amount'] ?? '0'}')),
+                            ]),
+                           
+                            DataRow(cells: [
+                              DataCell(Text('Total Amount:')),
+                              DataCell(Text('${summary['total_amount'] ?? '0'}',)),
+                            ]),
+                             DataRow(cells: [
+                              DataCell(Text('Total Withdrawable Amount:',
+                                  style: TextStyle(fontWeight: FontWeight.bold))),
+                              DataCell(Text(
+                                  '${summary['total_withdrawable_amount'] ?? '0'}',
+                                  style: TextStyle(fontWeight: FontWeight.bold))),
+                            ]),
+                      
+                          ],
+                        ),
                       ),
                     );
                   }),
+                  Transform.translate(
+                    offset: Offset(0, -Get.height * .05),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(onPressed: () => controller.requestWithdraw(), child: Text('Request Withdraw')),
+                      ],
+                    ),
+                  ),
+             
+
                  Expanded(
                   child:  Obx(() {
                     final withdrawals = controller.withdrawals;
@@ -83,7 +98,9 @@ class WithdrawView extends GetView<WithdrawController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text('Withdrawals:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text('Withdrawals:',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
                         SizedBox(height: 8),
                         ...withdrawals.map((w) => Card(
                               margin: EdgeInsets.symmetric(vertical: 4),

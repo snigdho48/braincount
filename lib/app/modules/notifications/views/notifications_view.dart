@@ -29,9 +29,9 @@ class NotificationsView extends GetView<NotificationsController> {
               itemCount: controller.messages.length,
               itemBuilder: (context, index) {
                 final messageStr = controller.messages[index];
-                Map<String, dynamic> data;
+                Map<dynamic, dynamic> data;
                 try {
-                  data = jsonDecode(messageStr);
+                  data = messageStr;
                 } catch (_) {
                   data = {"message": messageStr};
                 }

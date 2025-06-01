@@ -16,6 +16,27 @@ class WithdrawController extends GetxController {
     getWithdrawals();
   }
 
+  void requestWithdraw() async {
+    final result = await request.send(
+      url: '${baseUrl}withdraw/request/',
+      method: RequestType.POST,
+    );
+    result.fold((response) {
+      Get.snackbar('Success', 'Withdrawal request sent',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.check, color: Colors.green),
+          duration: const Duration(seconds: 3));
+    }, (error) {
+      Get.snackbar('Error', 'Something went wrong',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.error, color: Colors.red),
+          duration: const Duration(seconds: 3));
+    });
+
+  }
+
   void getWithdrawals() async {
     final result = await request.send(
       url: '${baseUrl}withdraw/',
