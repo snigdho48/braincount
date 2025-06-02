@@ -97,6 +97,27 @@ class DatacollectView extends GetView<DatacollectController> {
                           );
                         }),
                       ),
+                      Obx(()=>
+                      controller.previous_status.isNotEmpty ?
+                      Column(
+                        children: [
+                          Text('Previous Status:',
+                          style: TextStyle(
+                            fontSize: Get.width * .05,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          ),
+                          Text(controller.previous_status.map((e) => e.toString()).join(', '),
+                          style: TextStyle(
+                            fontSize: Get.width * .025,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ]) :SizedBox()
+                      ),
+
                       Obx(() {
                         if (controller.statusList.isEmpty) {
                           return Center(

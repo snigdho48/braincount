@@ -28,6 +28,7 @@ class DatacollectController extends NavController {
   final updatedmodel = Rx<MonitoringModel?>(null);
   final statusMultiSelectController = MultiSelectController<String>().obs;
   final commentFocusNode = FocusNode().obs;
+  final previous_status = [].obs;
 
   final statusList = [].obs;
 
@@ -35,7 +36,8 @@ class DatacollectController extends NavController {
   void onInit() {
     super.onInit();
     _getLocation();
-    uuid.value = Get.arguments;
+    uuid.value = Get.arguments[0];
+    previous_status.value = Get.arguments[1] ?? [];
     navcontroller.imageList.clear();
     getStatus();
     getdata(uuid: uuid.value);

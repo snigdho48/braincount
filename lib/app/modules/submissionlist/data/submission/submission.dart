@@ -20,6 +20,7 @@ class Submission {
   final List<dynamic>? extraImagesList;
   final String? approvalStatus;
   final String? rejectReason;
+  final List<dynamic>? previous_status;
 
   const Submission({
     this.uuid,
@@ -39,6 +40,7 @@ class Submission {
     this.extraImagesList,
     this.approvalStatus,
     this.rejectReason,
+    this.previous_status,
   });
 
   @override
@@ -67,6 +69,7 @@ class Submission {
         approvalStatus: data['approval_status'] as String?,
         rejectReason: data['reject_reason'] as String?,
         view: data['view'] as int?,
+        previous_status: data['previous_status'] as List<dynamic>?,
         billboardDetail: data['billboard_detail'] == null
             ? null
             : BillboardDetail.fromMap(
@@ -91,6 +94,7 @@ class Submission {
         'reject_reason': rejectReason,
         'billboard_detail': billboardDetail?.toMap(),
         'view': view,
+        'previous_status': previous_status,
       };
 
   /// `dart:convert`

@@ -33,6 +33,7 @@ class SubmissionlistView extends GetView<SubmissionListController> {
                           final data = controller.pendingtask
                               .where((task) => task.approvalStatus != null)
                               .toList();
+                          print(data);
                           // Null or structure check
                           if (data.isEmpty) {
                             return const Center(
@@ -45,9 +46,10 @@ class SubmissionlistView extends GetView<SubmissionListController> {
                                 .map<Widget>((task) => tasklistCardDashboard(
                                     text: '${task.billboardDetail?.title}  ${controller.getTaskView(task)}' ?? 'Untitled',
                                     status: task.approvalStatus ?? 'UNKNOWN',
-                                    onPressed: () => Get.toNamed(
-                                        Routes.SUBMISSION_DETAILS,
-                                        arguments: task)))
+                                    onPressed: () => task.approvalStatus == 'PENDING' ? Get.toNamed(Routes.SUBMISSION_DETAILS,
+                                            arguments: task)
+                                        :  Get.toNamed(Routes.SUBMISSION_DETAILS,
+                                            arguments: task)))
                                 .toList(),
                           );
                         }),

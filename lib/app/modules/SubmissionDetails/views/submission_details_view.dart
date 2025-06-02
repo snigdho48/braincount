@@ -118,6 +118,27 @@ class SubmissionDetailsView extends GetView<SubmissionDetailsController> {
                               ],
                             );
                           }),
+                          Obx(()=>
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('Previous Status:',
+                              style: TextStyle(
+                                fontSize: Get.width * .05,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                              ),
+                              Text(controller.submissionData.value.previous_status?.map((e) => e.toString()).join(', ') ?? 'No previous status',
+                              style: TextStyle(
+                                fontSize: Get.width * .05,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                              ),
+                            ],
+                          )),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: 12),
                             width: Get.width * .9,

@@ -60,6 +60,7 @@ class SubmissionListController extends GetxController {
     result.fold((response) {
     
       pendingtask.clear();
+      print(response);
       pendingtask.value = List<Submission>.from(
           response.map((x) => Submission.fromMap(x)).toList());
     }, (error) {
