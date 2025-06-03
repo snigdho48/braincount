@@ -29,6 +29,7 @@ class TasklistView extends GetView<TasklistController> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     spacing: Get.height * .015,
                     children: [
+                         
                       Obx(() {
                         final data = controller.pendingtask;
 
@@ -51,12 +52,12 @@ class TasklistView extends GetView<TasklistController> {
                               .map<Widget>((task) => tasklistCardDashboard(
                                     text: task['billboard_detail']?['title'] + controller.getTaskView(task) ??
                                         'Untitled',
-                                    status: task['is_accepeted'] ?? 'UNKNOWN',
+                                    status:  task['is_accepeted']  ?? 'UNKNOWN',
                                     onPressed: () =>
                                         task['is_accepeted'] == 'ACCEPTED'
                                             ? Get.toNamed(Routes.DATACOLLECT,
                                                 arguments: [task['uuid'],task['previous_status']])
-                                            : task['is_accepeted'] == 'PENDING'
+                                            : task['is_accepeted'] == 'PENDING' || task['is_accepeted'] == null
                                                 ? controller.opendialog(
                                                     uuid: task['uuid'])
                                                 : null,

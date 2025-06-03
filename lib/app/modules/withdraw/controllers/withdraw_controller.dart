@@ -18,7 +18,7 @@ class WithdrawController extends GetxController {
 
   void requestWithdraw() async {
     final result = await request.send(
-      url: '${baseUrl}withdraw/request/',
+      url: '${baseUrl}withdraw/',
       method: RequestType.POST,
     );
     result.fold((response) {

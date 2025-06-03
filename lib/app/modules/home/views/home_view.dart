@@ -187,7 +187,7 @@ class HomeView extends GetView<HomeController> {
                           children: monitoring
                               .map<Widget>((task) => tasklistCardDashboard(
                                     text: task['billboard_detail']?['title'] + controller.getTaskView(task) ?? 'Untitled',
-                                    status: task['is_accepeted'] ?? 'UNKNOWN',
+                                    status: task['is_accepeted'] ?? 'PENDING',
                                     onPressed: () => controller.opendialog(
                                         uuid: task['uuid']),
                                   ))

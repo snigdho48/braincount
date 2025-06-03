@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:braincount/app/modules/custom/navcontroller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +10,22 @@ import 'package:get_storage/get_storage.dart';
 import 'package:one_request/one_request.dart';
 
 import 'app/routes/app_pages.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:braincount/app/services/notification_service.dart';
+
+
+
+Future<void> requestNotificationPermission() async {
+  final plugin = FlutterLocalNotificationsPlugin();
+  final androidImplementation = plugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+  await androidImplementation?.requestNotificationsPermission();
+}
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeNotifications();
+
+  await requestNotificationPermission();
   await initall();
   runApp(
     GetMaterialApp(
@@ -71,6 +87,7 @@ Future<void> initall() async {
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+
   await GetStorage.init();
   oneRequest.loadingconfig();
   final navcontroller = Get.put(NavController());

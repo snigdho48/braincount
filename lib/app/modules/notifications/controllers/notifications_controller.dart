@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:one_request/one_request.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
+import 'package:braincount/app/services/notification_service.dart';
 
 class NotificationsController extends GetxController {
   final request = oneRequest();
@@ -54,6 +55,8 @@ class NotificationsController extends GetxController {
             // This is a real-time notification
             messages.insert(0, decoded);
             print('message2: $decoded');
+            // Show local notification
+            showNotification(decoded['title']?.toString() ?? 'New Notification', decoded['body']?.toString() ?? 'You have a new notification');
           }
         },
         onError: (error) {
@@ -89,7 +92,7 @@ class NotificationsController extends GetxController {
 
 
 
-void updateUnreadCount() {
+  void updateUnreadCount() {
     int count = 0;
     for (var msg in messages) {
       try {
