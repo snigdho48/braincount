@@ -1,9 +1,12 @@
 import 'package:braincount/app/modules/custom/map.dart';
+import 'package:braincount/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:one_request/one_request.dart';
 import 'package:braincount/app/data/constants.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:geolocator/geolocator.dart';
 
 class TasklistController extends GetxController {
   final request = oneRequest();
@@ -47,6 +50,54 @@ class TasklistController extends GetxController {
           icon: const Icon(Icons.error, color: Colors.red),
           duration: const Duration(seconds: 3));
     });
+  }
+
+  Future<void> getDetails(task) async {
+    // Check if location permission is granted
+    final locationPermission = await Permission.location.status;
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+
+    if (!serviceEnabled) {
+      Get.snackbar('Location Disabled',
+          'Location services are disabled. Please enable them in your device settings to continue.',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.location_off, color: Colors.red),
+          duration: const Duration(seconds: 3));
+      return;
+    }
+
+    if (locationPermission.isDenied || locationPermission.isPermanentlyDenied) {
+      // Optionally, you can request permission here
+      Get.snackbar('Permission Denied',
+          'Location permission is denied. Please enable it in your app settings to continue.',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.error, color: Colors.red),
+          duration: const Duration(seconds: 3));
+      return;
+    }
+        final latitude = task['billboard_detail']['latitude'];
+    final longitude = task['billboard_detail']['longitude'];
+    final currentLocation = await Geolocator.getCurrentPosition();
+    final distance = Geolocator.distanceBetween(latitude, longitude,
+        currentLocation.latitude, currentLocation.longitude);
+    if (distance > 50) {
+      Get.snackbar('Location Mismatch',
+          'You are not near the billboard location.',
+          snackPosition: SnackPosition.TOP,
+          isDismissible: true,
+          icon: const Icon(Icons.location_off, color: Colors.red),
+          duration: const Duration(seconds: 3));
+      return;
+    }
+    
+    return task['is_accepeted'] == 'ACCEPTED'
+        ? Get.toNamed(Routes.DATACOLLECT, arguments: [task['uuid'], task['previous_status']])
+        : task['is_accepeted'] == 'PENDING' || task['is_accepeted'] == null
+            ? opendialog(uuid: task['uuid'])
+            : null;
   }
 
   String getTaskView(task)  {

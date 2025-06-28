@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:get_storage/get_storage.dart';
 
 // Initialize notifications
 Future<void> initializeNotifications() async {
@@ -84,10 +85,11 @@ void notificationServiceOnStart(ServiceInstance service) async {
       service.setAsBackgroundService();
     });
   }
-
+  final storage = GetStorage();
   // Connect to your WebSocket
+  final token = storage.read('token');
   final channel = WebSocketChannel.connect(
-    Uri.parse('wss://your.websocket.url'), // <-- Replace with your WebSocket URL
+    Uri.parse('wss://bc.reachableads.com/ws/notifications/?token=$token'),
   );
 
   channel.stream.listen((message) {

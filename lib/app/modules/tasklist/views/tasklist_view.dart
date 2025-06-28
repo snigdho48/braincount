@@ -54,13 +54,7 @@ class TasklistView extends GetView<TasklistController> {
                                         'Untitled',
                                     status:  task['is_accepeted']  ?? 'UNKNOWN',
                                     onPressed: () =>
-                                        task['is_accepeted'] == 'ACCEPTED'
-                                            ? Get.toNamed(Routes.DATACOLLECT,
-                                                arguments: [task['uuid'],task['previous_status']])
-                                            : task['is_accepeted'] == 'PENDING' || task['is_accepeted'] == null
-                                                ? controller.opendialog(
-                                                    uuid: task['uuid'])
-                                                : null,
+                                        controller.getDetails(task)
                                   ))
                               .toList(),
                         );
